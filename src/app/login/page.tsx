@@ -54,19 +54,6 @@ export default async function LoginPage({
 
               <button className="login-submit" type="submit">登录</button>
               <button className="login-contact" type="button">返回</button>
-
-              <div className="login-consents">
-                <label className="login-consent">
-                  <input type="checkbox" name="offers" />
-                  <span>我愿意接收系统通知和更新；如需取消，可随时联系管理员处理。</span>
-                </label>
-                <label className="login-consent">
-                  <input type="checkbox" name="terms" />
-                  <span>
-                    我已阅读并同意<a href="mailto:admin@example.com">服务条款</a>，并确认了解<a href="mailto:admin@example.com">隐私政策</a>。
-                  </span>
-                </label>
-              </div>
             </form>
           </div>
         </section>

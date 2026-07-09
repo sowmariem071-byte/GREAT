@@ -2,6 +2,25 @@
 
 本文件记录项目每一步变化。后续任何代码、样式、文档、需求或模块设计调整，都必须追加记录。
 
+## 2026-07-10 09:12 - 登录页删除底部政策 checkbox
+- 目标：根据最新反馈，删除登录页表单底部两条政策/说明 checkbox，让登录区域更简洁。
+- 变更：
+  - 从登录表单中删除“系统通知和更新”说明 checkbox。
+  - 从登录表单中删除“服务条款 / 隐私政策”说明 checkbox。
+  - 清理 `login-consents`、`login-consent` 及相关链接样式，避免残留无用 CSS。
+  - 同步更新需求文档和开发计划文档，明确登录页不展示底部政策 checkbox。
+- 涉及文件：
+  - `src/app/login/page.tsx`
+  - `src/app/app.css`
+  - `docs/REQUIREMENTS.md`
+  - `docs/PLAN.md`
+  - `docs/PROGRESS.md`
+- 验证：
+  - 已通过：`npm run typecheck`
+  - 已通过：`npm run lint`
+  - 已通过：`npm run build`
+  - 待执行：提交推送后检查公网 `/login` 确认政策 checkbox 已移除。
+
 ## 2026-07-09 22:29 - 登录表单文案中文化
 - 目标：根据最新反馈，将登录表单区域的英文文案改为中文。
 - 变更：
