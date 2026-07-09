@@ -21,6 +21,9 @@
   - `npm run typecheck` 通过。
   - `npm run lint` 通过。
   - `npm run build` 通过，随后已清理 `.next` 构建缓存。
+  - 已推送到主仓库 `GREAT` 和 Vercel 实际绑定仓库 `zhengzhengba`。
+  - Vercel 生产部署 `dpl_4G2NRtypw8zrmZemzNnhD9U13hRx` 已完成。
+  - 公网 `/login` 返回 200，且不包含 `value="gr"`、`value="zzb888"`、`种子账号`、`默认密码` 或 6 位初始成员姓名。
 - 下一步：验证通过后推送到主仓库和 Vercel 绑定仓库，让公网登录页更新。
 
 ## 2026-07-09 16:34 - 登录页浅色科技感动效重构
