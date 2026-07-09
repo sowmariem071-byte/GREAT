@@ -65,6 +65,10 @@
   - 已通过：`npm run typecheck`
   - 已通过：`npm run lint`
   - 已通过：`npm run build`
+  - 已通过：提交 `d42dc14` 已推送到 `origin/main` 和 `vercel-origin/main`。
+  - 已通过：公网 `/login` 返回 200，页面包含“欢迎登录”和“母婴事业部”，且不包含已删除的政策文案。
+  - 已通过：公网 `/api/health` 返回 404，临时诊断接口已从最终部署中移除。
+  - 未通过：公网 `POST /api/auth/login` 仍返回 500；根据前一轮 `/api/health` 证据，根因是 Vercel Production 运行时未配置任何数据库/Supabase 连接环境变量，需要在正确的 Vercel 项目和 Production 环境补齐后重新部署。
 
 ## 2026-07-10 09:12 - 登录页删除底部政策 checkbox
 - 目标：根据最新反馈，删除登录页表单底部两条政策/说明 checkbox，让登录区域更简洁。
