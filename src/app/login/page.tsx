@@ -23,7 +23,17 @@ export default async function LoginPage({
 
       <section className="login-board" aria-label="内容排期管理系统登录">
         <figure className="login-illustration-card">
-          <img src="/images/cartoon-parenting-character.png" alt="蒸蒸爸与孩子的中式育儿插画" />
+          <video
+            aria-label="蒸蒸爸与孩子的治愈系春日插画动画"
+            autoPlay
+            loop
+            muted
+            playsInline
+            poster="/images/cartoon-parenting-character.png"
+          >
+            <source src="/videos/login-parenting-loop.mp4" type="video/mp4" />
+            <img src="/images/cartoon-parenting-character.png" alt="蒸蒸爸与孩子的中式育儿插画" />
+          </video>
         </figure>
 
         <section className="login-form-card">

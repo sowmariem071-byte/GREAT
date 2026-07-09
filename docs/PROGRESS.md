@@ -2,6 +2,28 @@
 
 本文件记录项目每一步变化。后续任何代码、样式、文档、需求或模块设计调整，都必须追加记录。
 
+## 2026-07-09 17:54 - 登录页左侧 3:4 媒体换成循环视频
+- 目标：根据反馈，将登录页左侧 3:4 静态人物插画替换为用户提供的治愈系春日插画动画视频。
+- 变更：
+  - 将下载目录中的视频复制为项目静态资源 `public/videos/login-parenting-loop.mp4`，避免使用中文超长文件名作为线上资源路径。
+  - 登录页左侧媒体位由 `<img>` 改为 `<video>`，支持 `autoPlay`、`loop`、`muted` 和 `playsInline`，保持无声自动循环播放。
+  - 保留原人物插画作为 `poster` 和视频不支持时的兜底内容。
+  - 更新登录页媒体样式，让图片和视频都按 3:4 容器铺满裁切。
+  - 同步更新需求文档和开发计划文档。
+- 影响文件：
+  - `src/app/login/page.tsx`
+  - `src/app/app.css`
+  - `public/videos/login-parenting-loop.mp4`
+  - `docs/REQUIREMENTS.md`
+  - `docs/PLAN.md`
+  - `docs/PROGRESS.md`
+- 验证：
+  - `npm run typecheck` 通过。
+  - `npm run lint` 通过。
+  - `npm run build` 通过。
+  - 已清理 `.next` 构建缓存。
+  - 待推送到主仓库与 Vercel 绑定仓库。
+
 ## 2026-07-09 17:38 - 登录页画幅与桌面分辨率适配
 - 目标：根据公网截图反馈，修正登录页主体画幅过大、左侧人物插画纵向撑开、页面在桌面浏览器中出现明显滚动的问题，并适配常见电脑分辨率。
 - 根因：
