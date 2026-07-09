@@ -20,7 +20,9 @@
   - 已通过：`npm run typecheck`
   - 已通过：`npm run lint`
   - 已通过：`npm run build`
-  - 待执行：提交推送后检查公网 `/login` 中文文案。
+  - 已通过：提交 `1850454` 已推送到 `origin/main` 和 `vercel-origin/main`。
+  - 已通过：公网 `https://zhengzhengba.vercel.app/login` 返回 200，HTML 包含“欢迎登录”“账号”“密码”“登录”“返回”“服务条款”“隐私政策”和“母婴事业部”。
+  - 已通过：公网 HTML 不再包含旧英文表单文案 `Create Account`、`Register` 或 `Password`。
 
 ## 2026-07-09 22:16 - 登录页顶部品牌字号与官网按钮视觉微调
 - 目标：根据最新反馈，放大登录页左上角“母婴事业部”文字，并将右上角“进入【蒸蒸爸】官网”改为淡粉色和白色组合。
