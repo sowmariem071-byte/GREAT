@@ -21,7 +21,9 @@
   - `npm run typecheck` 通过。
   - `npm run lint` 通过。
   - `npm run build` 通过，随后已清理 `.next` 构建缓存。
-- 下一步：验证通过后推送 GitHub，由 Vercel 重新部署最新登录页。
+  - 已推送到主仓库 `GREAT` 和 Vercel 实际绑定仓库 `zhengzhengba`。
+  - Vercel 生产部署 `dpl_Gk4vNmvyXM7VPqdWJfE2JMZJnEN7` 已完成，公网 `/login` 返回 200。
+- 下一步：继续根据视觉反馈微调登录页，或回到 `DATABASE_URL` 配置修复公网登录接口。
 
 ## 2026-07-09 14:50 - Supabase 生产数据库与 Vercel 部署准备
 - 目标：使用 Supabase + Vercel 将内容排期系统上线到公网。
