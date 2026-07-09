@@ -23,7 +23,8 @@
   - `npm run build` 通过。
   - 已清理 `.next` 构建缓存。
   - 已提交 `ba19c6c`，并推送到主仓库 `GREAT` 和 Vercel 实际绑定仓库 `zhengzhengba`。
-  - 待 Vercel 自动部署后检查公网 `/login` 视频资源加载。
+  - Vercel 已自动部署，公网 `/login` 返回 200 且包含 `/videos/login-parenting-loop.mp4`。
+  - 公网视频资源 `/videos/login-parenting-loop.mp4` 返回 200，`Content-Type` 为 `video/mp4`，大小为 15,256,740 bytes。
 
 ## 2026-07-09 17:38 - 登录页画幅与桌面分辨率适配
 - 目标：根据公网截图反馈，修正登录页主体画幅过大、左侧人物插画纵向撑开、页面在桌面浏览器中出现明显滚动的问题，并适配常见电脑分辨率。
