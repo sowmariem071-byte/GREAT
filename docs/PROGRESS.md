@@ -26,7 +26,8 @@
   - `npm run build` 通过。
   - 已清理 `.next` 构建缓存。
   - 已提交 `779dac2`，并推送到主仓库 `GREAT` 和 Vercel 实际绑定仓库 `zhengzhengba`。
-  - 待 Vercel 自动部署后检查公网 `/login` 是否切换为无顶部导航双栏布局。
+  - Vercel 已自动部署，公网 `/login` 返回 200，HTML 已包含 `Create Account` 和 checkbox 条款文案，且不再包含旧顶部导航文案。
+  - 公网 CSS 已包含 `width:min(100%,1200px)`、`grid-template-columns:1fr 1fr`、`gap:14px` 和 `min-height:560px` 等新布局规则。
 
 ## 2026-07-09 18:09 - 登录页按参考图重排为极简顶栏与双卡布局
 - 目标：根据反馈，重新调整登录页排版，让页面更接近参考图，而不是停留在上一版大标题、大官网按钮和偏空洞的双栏样式。
