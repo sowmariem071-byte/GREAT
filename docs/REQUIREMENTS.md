@@ -260,6 +260,10 @@
 - 使用 Prisma 管理 PostgreSQL。
 - 使用 S3 兼容对象存储保存头像和审核截图。
 - 支持 Docker 服务器部署。
+- 支持使用 Supabase 托管 PostgreSQL 作为公网数据库。
+- 支持使用 Vercel 部署公网 Web 服务。
+- 生产环境必须通过 Vercel 环境变量配置 `DATABASE_URL`、`SESSION_SECRET`、`APP_URL` 和对象存储相关密钥，禁止提交 `.env` 或明文密钥。
+- Supabase 第一版只作为 Prisma 直连数据库使用，不依赖 Supabase Data API；数据库表启用 RLS 且不开放匿名客户端策略。
 - 本地没有 Docker 时，需要保留可替代的开发配置和说明。
 - 时区固定为 Asia/Shanghai。
 

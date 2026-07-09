@@ -2,6 +2,38 @@
 
 本文件记录项目每一步变化。后续任何代码、样式、文档、需求或模块设计调整，都必须追加记录。
 
+## 2026-07-09 14:50 - Supabase 生产数据库与 Vercel 部署准备
+- 目标：使用 Supabase + Vercel 将内容排期系统上线到公网。
+- 变更：
+  - 已确认 Supabase 项目 `zhengzhengba` 可用，项目 ref 为 `metnougmmfrtemaaynkk`。
+  - 已在 Supabase public schema 执行初始 Prisma 数据库结构迁移。
+  - 已补充外键索引迁移，处理 Supabase 性能顾问提示的缺失索引。
+  - 已清空业务测试假数据，只保留 6 个初始用户和 5 条每日目标配置。
+  - 已将生产初始账号设置为姓名拼音首字母缩写：`gr`、`hxy`、`wx`、`sxx`、`hly`、`hwq`，统一密码为 `zzb888`。
+  - 已确认 `Script`、`VideoTask`、`ReviewRound`、`ReviewAttachment`、`PublishSchedule`、`Notification`、`Session` 生产表当前为空。
+  - 已开启数据库表 RLS，但第一版仅通过服务端 Prisma 直连访问，不开放 Supabase 匿名客户端策略。
+  - 已在 `package.json` 增加 `postinstall` 执行 `prisma generate`，保证 Vercel 云端构建生成 Prisma Client。
+  - 已更新 `docs/REQUIREMENTS.md` 和 `docs/PLAN.md`，补充 Supabase + Vercel 公网部署要求和下一步优先级。
+- 影响文件：
+  - `package.json`
+  - `docs/REQUIREMENTS.md`
+  - `docs/PLAN.md`
+  - `docs/PROGRESS.md`
+- 验证：
+  - Supabase 表数量、迁移记录、初始账号和空业务表已通过 Supabase SQL 查询确认。
+  - Supabase Performance Advisor 在补充索引后仅剩新表未使用索引的提示，属于上线前无流量阶段的正常提示。
+  - Supabase Security Advisor 仅提示启用 RLS 但无公开策略，符合第一版服务端直连设计。
+  - `npx prisma validate` 通过，存在 Prisma 7 之前迁移配置文件的提示，不影响当前部署。
+  - `npm run typecheck` 通过。
+  - `npm run lint` 通过。
+  - `npm run build` 通过，随后已清理 `.next` 构建缓存。
+- 当前阻塞：
+  - Vercel 部署仍需要生产 `DATABASE_URL`。该值必须使用 Supabase 数据库连接串或连接池连接串，并通过 Vercel 环境变量配置，不能提交到 GitHub。
+  - 当前 Vercel 插件未暴露新增环境变量工具；需要用户提供连接串后使用可用方式配置，或在 Vercel 项目设置中手动添加。
+- 下一步：
+  - 配置 Vercel 环境变量：`DATABASE_URL`、`SESSION_SECRET`、`APP_URL`，以及头像/审核截图所需的 S3 变量。
+  - 执行 Vercel 部署并用公网地址验证登录、角色首页和核心表单链路。
+
 ## 2026-07-09 12:45 - 准备上传 GitHub 仓库
 - 目标：根据要求，将当前内容排期系统项目上传到 GitHub 仓库 `sowmariem071-byte/GREAT.git`。
 - 变更：
