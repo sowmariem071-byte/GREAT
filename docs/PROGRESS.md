@@ -21,7 +21,9 @@
   - 已通过：`npm run typecheck`
   - 已通过：`npm run lint`
   - 已通过：`npm run build`
-  - 待执行：提交推送后检查公网 `/login` 页面和官网链接。
+  - 已通过：提交 `9273583` 已推送到 `origin/main` 和 `vercel-origin/main`。
+  - 已通过：公网 `https://zhengzhengba.vercel.app/login` 返回 200，HTML 包含“母婴事业部”“进入【蒸蒸爸】官网”和 `https://ihmzoectzzq0.meoo.fun/`。
+  - 已通过：公网 CSS 包含 `login-topbar`、`login-brand-name`、`login-official-site` 和 `calc(200svh - 266px)` 高度公式。
 
 ## 2026-07-09 21:34 - 登录页调整为接近满屏的大卡片比例
 - 目标：根据最新反馈，修正登录页虽然正方形但整体过小、左右和底部留白过大的问题，让登录区域更接近参考图的一屏展开比例。
