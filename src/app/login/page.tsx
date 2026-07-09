@@ -38,32 +38,32 @@ export default async function LoginPage({
 
         <section className="login-form-card">
           <div className="login-form-inner">
-            <h1>Create Account</h1>
+            <h1>欢迎登录</h1>
 
             <form action="/api/auth/login" className="login-form" method="post">
               <label className="login-field">
-                <input name="email" type="text" placeholder="Email" autoComplete="username" required />
+                <input name="email" type="text" placeholder="账号" autoComplete="username" required />
               </label>
 
               <label className="login-field login-password-field">
-                <input name="password" type="password" placeholder="Password" autoComplete="current-password" required />
+                <input name="password" type="password" placeholder="密码" autoComplete="current-password" required />
                 <span className="login-eye" aria-hidden="true">⌕</span>
               </label>
 
-              {params.error ? <p className="form-error">The account or password is incorrect.</p> : null}
+              {params.error ? <p className="form-error">账号或密码错误，请重新输入。</p> : null}
 
-              <button className="login-submit" type="submit">Register</button>
-              <button className="login-contact" type="button">Back</button>
+              <button className="login-submit" type="submit">登录</button>
+              <button className="login-contact" type="button">返回</button>
 
               <div className="login-consents">
                 <label className="login-consent">
                   <input type="checkbox" name="offers" />
-                  <span>I&apos;d like to receive exclusive offers and updates by email. I understand I can contact the administrator to unsubscribe at anytime.</span>
+                  <span>我愿意接收系统通知和更新；如需取消，可随时联系管理员处理。</span>
                 </label>
                 <label className="login-consent">
                   <input type="checkbox" name="terms" />
                   <span>
-                    I agree to the <a href="mailto:admin@example.com">Terms &amp; Conditions</a> and acknowledge that I have read the <a href="mailto:admin@example.com">Privacy Policy</a>.
+                    我已阅读并同意<a href="mailto:admin@example.com">服务条款</a>，并确认了解<a href="mailto:admin@example.com">隐私政策</a>。
                   </span>
                 </label>
               </div>
