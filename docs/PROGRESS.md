@@ -9,7 +9,13 @@
   - 检查 `.gitignore` 已排除 `.env`、`.next`、`node_modules`、日志和上传目录。
   - 新增忽略规则 `*.tsbuildinfo`，避免提交 TypeScript 增量缓存文件。
   - 远端 `https://github.com/sowmariem071-byte/GREAT.git` 未返回现有分支引用，按空仓库推送流程处理。
-- 验证：待初始化 Git、提交并推送到 GitHub 后补充结果。
+- 验证：
+  - 已初始化本地 Git 仓库并设置本项目提交作者。
+  - 已添加远端 `origin=https://github.com/sowmariem071-byte/GREAT.git`。
+  - `git status --short --ignored` 确认 `.env`、`.next/`、`node_modules/`、日志和 `tsconfig.tsbuildinfo` 均未进入提交。
+  - 已创建初始提交 `75ae1cc`，提交信息为 `Initial content scheduling system`。
+  - 已执行 `git push -u origin main`，远端 `main` 分支创建成功。
+  - `git ls-remote --heads origin main` 确认远端分支指向 `75ae1cca3c0b74c9bdb12c6804f1c46107740278`。
 
 ## 2026-07-09 12:38 - 重新执行数据清空与账号重置
 - 目标：根据再次确认的要求，重新清空当前测试假数据，并再次将初始账号和密码同步为正式规则。
