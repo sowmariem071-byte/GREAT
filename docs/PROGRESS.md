@@ -19,7 +19,9 @@
   - 已通过：`npm run typecheck`
   - 已通过：`npm run lint`
   - 已通过：`npm run build`
-  - 待执行：提交推送后检查公网 `/login` 确认政策 checkbox 已移除。
+  - 已通过：提交 `69edb84` 已推送到 `origin/main` 和 `vercel-origin/main`。
+  - 已通过：公网 `https://zhengzhengba.vercel.app/login` 返回 200，仍包含“欢迎登录”“登录”“返回”。
+  - 已通过：公网 HTML 不再包含“服务条款”“隐私政策”“系统通知和更新”、`name="offers"` 或 `name="terms"`；公网 CSS 不再包含 `login-consents` 或 `login-consent`。
 
 ## 2026-07-09 22:29 - 登录表单文案中文化
 - 目标：根据最新反馈，将登录表单区域的英文文案改为中文。
