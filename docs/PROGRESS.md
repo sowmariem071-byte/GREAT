@@ -41,7 +41,30 @@
   - 已通过：`npm run typecheck`
   - 已通过：`npm run lint`
   - 已通过：`npm run build`
-  - 待执行：部署后重新检查公网 `/api/health` 与登录接口。
+  - 已执行：部署后公网 `/api/health` 仍显示所有数据库相关变量均不存在，确认不是变量名 fallback 问题，而是当前 Vercel Production 项目未配置或未获得数据库环境变量。
+
+## 2026-07-10 01:08 - 删除临时诊断接口并记录公网阻塞点
+- 目标：在定位公网数据库连接问题后，移除临时 `/api/health` 诊断接口，避免长期暴露诊断信息。
+- 发现：
+  - fallback 部署后，公网 `/api/health` 仍显示 `DATABASE_URL`、`DIRECT_URL`、`POSTGRES_URL`、`POSTGRES_PRISMA_URL`、`POSTGRES_URL_NON_POOLING`、`SUPABASE_DATABASE_URL`、`SUPABASE_DB_URL`、`SUPABASE_POSTGRES_URL`、`SUPABASE_URL`、`NEXT_PUBLIC_SUPABASE_URL` 全部为 `false`。
+  - 因此当前 Vercel 生产运行时没有任何数据库/Supabase 环境变量，`POST /api/auth/login` 返回 500 的根因是生产环境变量未进入当前服务 `zhengzhengba.vercel.app` 的项目或 Production 环境。
+  - 当前 Vercel connector 只看到 `awen-work` 团队项目，看不到 `zhengzhengba` 项目；Vercel CLI 本机也没有登录态，无法直接替该项目写入环境变量。
+  - Supabase connector 当前可访问的项目不是 `metnougmmfrtemaaynkk`，对 `metnougmmfrtemaaynkk` 执行 SQL 返回无权限，因此无法直接代替用户查询或复制该项目连接串。
+- 变更：
+  - 删除临时 `/api/health` 诊断接口。
+  - 保留 `src/lib/prisma.ts` 的数据库连接变量 fallback，后续只要 Vercel 正确配置任一数据库连接变量即可生效。
+- 需要手动确认：
+  - 在 Vercel 的 `zhengzhengba` 项目 Production 环境中配置 `DATABASE_URL`，值应为 Supabase Postgres/Pooler 连接串，并重新部署。
+  - 确认 `SESSION_SECRET` 也配置在 Production 环境。
+  - 如需头像/截图上传，再配置 `S3_ENDPOINT`、`S3_BUCKET`、`S3_ACCESS_KEY_ID`、`S3_SECRET_ACCESS_KEY`、`S3_PUBLIC_BASE_URL`。
+- 涉及文件：
+  - `src/app/api/health/route.ts`
+  - `docs/PROGRESS.md`
+- 验证：
+  - 初次执行 `npm run typecheck` 时失败，原因是 `.next/types` 残留已删除的 `/api/health` 类型文件；安全删除 `.next` 后重跑通过。
+  - 已通过：`npm run typecheck`
+  - 已通过：`npm run lint`
+  - 已通过：`npm run build`
 
 ## 2026-07-10 09:12 - 登录页删除底部政策 checkbox
 - 目标：根据最新反馈，删除登录页表单底部两条政策/说明 checkbox，让登录区域更简洁。
