@@ -358,15 +358,17 @@ select:focus-visible {
 .login-board {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  width: min(100%, 1200px);
+  gap: 12px;
+  width: min(1120px, calc(100vw - 48px));
   margin: 0 auto;
 }
 
 .login-illustration-card,
 .login-form-card {
-  min-height: 560px;
-  border-radius: 18px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  box-sizing: border-box;
+  border-radius: 16px;
   overflow: hidden;
 }
 
@@ -397,25 +399,27 @@ select:focus-visible {
 }
 
 .login-form-card {
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 40px 0;
   background: #f8f8f8;
 }
 
 .login-form-inner {
-  width: 72%;
+  width: 78%;
   min-width: 280px;
-  max-width: 420px;
+  max-width: 440px;
   text-align: center;
+  transform: translateY(8px);
 }
 
 .login-form-inner h1 {
-  margin: 0 0 42px;
-  color: #222222;
-  font-size: 22px;
+  margin: 0 0 40px;
+  color: #111111;
+  font-size: 20px;
   font-weight: 700;
-  letter-spacing: 0;
+  letter-spacing: -0.02em;
 }
 
 .login-form {
@@ -428,7 +432,7 @@ select:focus-visible {
   grid-template-columns: minmax(0, 1fr);
   align-items: center;
   height: 42px;
-  border: 1px solid #e6e6e6;
+  border: 1px solid #e5e5e5;
   border-radius: 999px;
   padding: 0 18px;
   background: #ffffff;
@@ -483,7 +487,7 @@ select:focus-visible {
 .login-submit {
   border: 0;
   color: #ffffff;
-  background: #ffa4b5;
+  background: #ff98ad;
   box-shadow: none;
   transition: filter 180ms ease;
 }
@@ -7473,17 +7477,8 @@ a.video-signal-card[data-active="true"] {
 
   .login-board {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 12px;
     width: 100%;
-  }
-
-  .login-illustration-card,
-  .login-form-card {
-    min-height: auto;
-  }
-
-  .login-illustration-card {
-    height: 360px;
   }
 
   .login-form-card {
