@@ -19,7 +19,9 @@
   - 已通过：`npm run typecheck`
   - 已通过：`npm run lint`
   - 已通过：`npm run build`
-  - 待执行：提交推送后检查公网 `/login` 页面和 CSS 规则。
+  - 已通过：提交 `2806161` 已推送到 `origin/main` 和 `vercel-origin/main`。
+  - 已通过：公网 `https://zhengzhengba.vercel.app/login` 返回 200，HTML 包含 `Create Account` 和 `/videos/login-parenting-loop.mp4`。
+  - 已通过：公网 CSS 包含 `width:min(1120px,calc(100vw - 48px))`、`grid-template-columns:1fr 1fr`、`gap:12px`、`aspect-ratio:1/1`，不再包含登录页旧规则 `min-height:560px` 或 `width:min(100%,1200px)`。
 
 ## 2026-07-09 20:41 - 登录页按最新提示词重构为无导航双栏页面
 - 目标：根据最新提示词，重新调整登录页排版，去掉顶部导航栏，制作高级简约风格的双栏登录页面。
