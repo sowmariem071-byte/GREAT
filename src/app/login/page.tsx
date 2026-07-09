@@ -14,6 +14,13 @@ export default async function LoginPage({
 
   return (
     <main className="login-page">
+      <header className="login-topbar" aria-label="登录页导航">
+        <p className="login-brand-name">母婴事业部</p>
+        <a className="login-official-site" href="https://ihmzoectzzq0.meoo.fun/" target="_blank" rel="noreferrer">
+          进入【蒸蒸爸】官网
+        </a>
+      </header>
+
       <section className="login-board" aria-label="内容排期管理系统登录">
         <figure className="login-illustration-card">
           <video
