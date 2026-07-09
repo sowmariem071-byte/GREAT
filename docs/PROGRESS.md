@@ -20,7 +20,9 @@
   - 已通过：`npm run typecheck`
   - 已通过：`npm run lint`
   - 已通过：`npm run build`
-  - 待执行：提交推送后检查公网 `/login` 页面和 CSS 规则。
+  - 已通过：提交 `1ce0bda` 已推送到 `origin/main` 和 `vercel-origin/main`。
+  - 已通过：公网 `https://zhengzhengba.vercel.app/login` 返回 200，HTML 包含 `Create Account` 和 `/videos/login-parenting-loop.mp4`。
+  - 已通过：公网 CSS 包含 `width:100vw`、`width:min(calc(100vw - 32px),calc(200svh - 186px))`、`gap:10px`、`border-radius:14px`，且不再包含登录页旧的 `1120px` 宽度规则。
 
 ## 2026-07-09 21:12 - 登录页修正为正方形双卡片比例
 - 目标：根据最新反馈，修正登录页左右卡片被做成竖长比例的问题，让页面更接近参考图中的正方形双卡片结构。
