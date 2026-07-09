@@ -16,7 +16,9 @@
   - 已通过：`npm run typecheck`
   - 已通过：`npm run lint`
   - 已通过：`npm run build`
-  - 待执行：提交推送后检查公网 `/login` 顶部品牌和官网按钮样式。
+  - 已通过：提交 `67433c8` 已推送到 `origin/main` 和 `vercel-origin/main`。
+  - 已通过：公网 `https://zhengzhengba.vercel.app/login` 返回 200，HTML 包含“母婴事业部”和“进入【蒸蒸爸】官网”。
+  - 已通过：公网 CSS 包含品牌文字 `font-size:36px`、官网按钮白色文字、淡粉渐变 `#ffc8d4` 到 `#ff9fb4`、粉色阴影和 `calc(200svh - 298px)` 高度公式。
 
 ## 2026-07-09 21:58 - 登录页补充顶部品牌与官网入口
 - 目标：根据最新反馈，在登录页当前大卡片位置基础上，参照参考图补充左上角网页名称和右上角官网入口。
