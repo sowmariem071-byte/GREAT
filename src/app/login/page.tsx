@@ -16,7 +16,13 @@ export default async function LoginPage({
     <main className="login-page">
       <header className="login-topbar">
         <strong>母婴事业部</strong>
-        <a href="https://ihmzoectzzq0.meoo.fun/" target="_blank" rel="noreferrer">
+        <nav className="login-nav" aria-label="登录页导航">
+          <span>内容排期</span>
+          <span>脚本资产</span>
+          <span>视频流转</span>
+          <span>发布库存</span>
+        </nav>
+        <a className="login-official-link" href="https://ihmzoectzzq0.meoo.fun/" target="_blank" rel="noreferrer">
           进入【蒸蒸爸官网】
         </a>
       </header>
