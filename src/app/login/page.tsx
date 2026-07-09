@@ -14,19 +14,6 @@ export default async function LoginPage({
 
   return (
     <main className="login-page">
-      <header className="login-topbar">
-        <strong>母婴事业部</strong>
-        <nav className="login-nav" aria-label="登录页导航">
-          <span>内容排期</span>
-          <span>脚本资产</span>
-          <span>视频流转</span>
-          <span>发布库存</span>
-        </nav>
-        <a className="login-official-link" href="https://ihmzoectzzq0.meoo.fun/" target="_blank" rel="noreferrer">
-          进入【蒸蒸爸官网】
-        </a>
-      </header>
-
       <section className="login-board" aria-label="内容排期管理系统登录">
         <figure className="login-illustration-card">
           <video
@@ -44,30 +31,35 @@ export default async function LoginPage({
 
         <section className="login-form-card">
           <div className="login-form-inner">
-            <p className="login-kicker">Content Calendar Studio</p>
-            <h1>欢迎登录</h1>
-            <p>登录母婴事业部后台，请输入账号信息</p>
+            <h1>Create Account</h1>
 
             <form action="/api/auth/login" className="login-form" method="post">
               <label className="login-field">
-                <span aria-hidden="true">♡</span>
-                <input name="email" type="text" placeholder="账号" autoComplete="username" required />
+                <input name="email" type="text" placeholder="Email" autoComplete="username" required />
               </label>
 
-              <label className="login-field">
-                <span aria-hidden="true">⌘</span>
-                <input name="password" type="password" placeholder="密码" autoComplete="current-password" required />
+              <label className="login-field login-password-field">
+                <input name="password" type="password" placeholder="Password" autoComplete="current-password" required />
+                <span className="login-eye" aria-hidden="true">⌕</span>
               </label>
 
-              {params.error ? <p className="form-error">账号、密码或用户状态不正确。</p> : null}
+              {params.error ? <p className="form-error">The account or password is incorrect.</p> : null}
 
-              <div className="login-help-row">
-                <span></span>
-                <a href="mailto:admin@example.com">忘记密码？</a>
+              <button className="login-submit" type="submit">Register</button>
+              <button className="login-contact" type="button">Back</button>
+
+              <div className="login-consents">
+                <label className="login-consent">
+                  <input type="checkbox" name="offers" />
+                  <span>I&apos;d like to receive exclusive offers and updates by email. I understand I can contact the administrator to unsubscribe at anytime.</span>
+                </label>
+                <label className="login-consent">
+                  <input type="checkbox" name="terms" />
+                  <span>
+                    I agree to the <a href="mailto:admin@example.com">Terms &amp; Conditions</a> and acknowledge that I have read the <a href="mailto:admin@example.com">Privacy Policy</a>.
+                  </span>
+                </label>
               </div>
-
-              <button className="login-submit" type="submit">登录</button>
-              <a className="login-contact" href="mailto:admin@example.com">注册 / 联系管理员</a>
             </form>
           </div>
         </section>

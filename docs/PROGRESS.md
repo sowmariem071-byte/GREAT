@@ -2,6 +2,31 @@
 
 本文件记录项目每一步变化。后续任何代码、样式、文档、需求或模块设计调整，都必须追加记录。
 
+## 2026-07-09 20:41 - 登录页按最新提示词重构为无导航双栏页面
+- 目标：根据最新提示词，重新调整登录页排版，去掉顶部导航栏，制作高级简约风格的双栏登录页面。
+- 变更：
+  - 删除登录页顶部导航栏和官网入口，仅保留居中的主体双栏区域。
+  - 页面背景保持纯白，主体最大宽度 1200px，左右 padding 24px，距离页面顶部约 48px。
+  - 主体改为 `grid-template-columns: 1fr 1fr`，左右双栏间距 14px。
+  - 左侧视觉视频卡最小高度 560px，圆角 18px，`overflow: hidden`，视频铺满卡片并 `object-fit: cover`。
+  - 右侧登录注册面板背景改为 `#f8f8f8`，圆角 18px，最小高度 560px，内部表单水平垂直居中。
+  - 表单标题改为 `Create Account`，输入框改为 `Email` 和 `Password`，按钮改为 `Register` 和 `Back`。
+  - 增加两条 checkbox 说明，并为 `Terms & Conditions` 和 `Privacy Policy` 添加可点击链接样式。
+  - 小于 768px 时改为单列布局，左右 padding 16px，视觉卡高度 360px。
+  - 同步更新需求文档和开发计划文档。
+- 影响文件：
+  - `src/app/login/page.tsx`
+  - `src/app/app.css`
+  - `docs/REQUIREMENTS.md`
+  - `docs/PLAN.md`
+  - `docs/PROGRESS.md`
+- 验证：
+  - `npm run typecheck` 通过。
+  - `npm run lint` 通过。
+  - `npm run build` 通过。
+  - 已清理 `.next` 构建缓存。
+  - 待推送到主仓库与 Vercel 绑定仓库。
+
 ## 2026-07-09 18:09 - 登录页按参考图重排为极简顶栏与双卡布局
 - 目标：根据反馈，重新调整登录页排版，让页面更接近参考图，而不是停留在上一版大标题、大官网按钮和偏空洞的双栏样式。
 - 变更：
