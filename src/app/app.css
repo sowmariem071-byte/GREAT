@@ -362,7 +362,7 @@ select:focus-visible {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 40px;
+  height: 56px;
   width: 100%;
   padding: 0 2px;
   box-sizing: border-box;
@@ -371,7 +371,7 @@ select:focus-visible {
 .login-brand-name {
   margin: 0;
   color: #16181d;
-  font-size: 18px;
+  font-size: 36px;
   font-weight: 800;
   letter-spacing: -0.04em;
 }
@@ -383,14 +383,15 @@ select:focus-visible {
   min-width: 162px;
   height: 32px;
   padding: 0 18px;
-  border: 1px solid rgba(22, 24, 29, 0.56);
+  border: 1px solid rgba(255, 152, 173, 0.42);
   border-radius: 10px;
-  color: #16181d;
+  color: #ffffff;
   font-size: 16px;
   font-weight: 800;
   line-height: 1;
   text-decoration: none;
-  background: #ffffff;
+  background: linear-gradient(135deg, #ffc8d4 0%, #ff9fb4 100%);
+  box-shadow: 0 14px 32px rgba(255, 152, 173, 0.24);
 }
 
 .login-board {
@@ -398,7 +399,7 @@ select:focus-visible {
   grid-template-columns: 1fr 1fr;
   gap: 10px;
   align-items: start;
-  width: min(calc(100vw - 32px), calc(200svh - 266px));
+  width: min(calc(100vw - 32px), calc(200svh - 298px));
   margin: 28px auto 0;
 }
 
@@ -7519,7 +7520,7 @@ a.video-signal-card[data-active="true"] {
   }
 
   .login-brand-name {
-    font-size: 16px;
+    font-size: 22px;
   }
 
   .login-official-site {
