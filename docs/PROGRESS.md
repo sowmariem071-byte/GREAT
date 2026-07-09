@@ -21,6 +21,28 @@
   - 已通过：`npm run build`
   - 待执行：部署后访问公网 `/api/health` 获取生产错误证据。
 
+## 2026-07-10 00:58 - Prisma 数据库连接变量 fallback
+- 目标：根据公网 `/api/health` 诊断结果修复 Vercel 生产环境数据库变量兼容问题。
+- 发现：
+  - 公网 `/api/health` 返回 500。
+  - 诊断结果显示 `DATABASE_URL`、`DIRECT_URL`、`POSTGRES_URL`、`POSTGRES_PRISMA_URL`、`SUPABASE_URL`、`NEXT_PUBLIC_SUPABASE_URL` 在当前生产运行时均不存在。
+  - 这说明当前 Vercel 项目运行时没有拿到数据库连接变量，`POST /api/auth/login` 的 500 根因是 Prisma 无法初始化数据库连接，而不是 UI、账号密码或 RLS。
+- 变更：
+  - 在 `src/lib/prisma.ts` 中增加服务端数据库连接变量 fallback：当 `DATABASE_URL` 不存在时，依次尝试 `POSTGRES_PRISMA_URL`、`POSTGRES_URL`、`POSTGRES_URL_NON_POOLING`、`SUPABASE_DATABASE_URL`、`SUPABASE_DB_URL`、`SUPABASE_POSTGRES_URL`。
+  - 在 `/api/health` 中补充这些常见变量名的存在性诊断。
+  - 更新 `.env.example` 和需求文档，说明生产环境可以使用这些数据库连接变量别名。
+- 涉及文件：
+  - `src/lib/prisma.ts`
+  - `src/app/api/health/route.ts`
+  - `.env.example`
+  - `docs/REQUIREMENTS.md`
+  - `docs/PROGRESS.md`
+- 验证：
+  - 已通过：`npm run typecheck`
+  - 已通过：`npm run lint`
+  - 已通过：`npm run build`
+  - 待执行：部署后重新检查公网 `/api/health` 与登录接口。
+
 ## 2026-07-10 09:12 - 登录页删除底部政策 checkbox
 - 目标：根据最新反馈，删除登录页表单底部两条政策/说明 checkbox，让登录区域更简洁。
 - 变更：

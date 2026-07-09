@@ -9,6 +9,10 @@ function envPresence() {
     DIRECT_URL: Boolean(process.env.DIRECT_URL),
     POSTGRES_URL: Boolean(process.env.POSTGRES_URL),
     POSTGRES_PRISMA_URL: Boolean(process.env.POSTGRES_PRISMA_URL),
+    POSTGRES_URL_NON_POOLING: Boolean(process.env.POSTGRES_URL_NON_POOLING),
+    SUPABASE_DATABASE_URL: Boolean(process.env.SUPABASE_DATABASE_URL),
+    SUPABASE_DB_URL: Boolean(process.env.SUPABASE_DB_URL),
+    SUPABASE_POSTGRES_URL: Boolean(process.env.SUPABASE_POSTGRES_URL),
     SUPABASE_URL: Boolean(process.env.SUPABASE_URL),
     NEXT_PUBLIC_SUPABASE_URL: Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL),
   };
