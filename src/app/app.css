@@ -637,48 +637,6 @@ select:focus-visible {
   font-weight: 800;
 }
 
-.demo-list {
-  display: grid;
-  gap: 10px;
-}
-
-.demo-user {
-  display: grid;
-  grid-template-columns: 34px minmax(0, 1fr);
-  gap: 10px;
-  align-items: center;
-  padding: 9px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.3);
-}
-
-.demo-user > span {
-  display: grid;
-  place-items: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 13px;
-  color: #ffffff;
-  font-weight: 900;
-  background: linear-gradient(145deg, var(--accent), var(--accent-3));
-}
-
-.demo-user strong,
-.demo-user small {
-  display: block;
-}
-
-.demo-user strong {
-  color: #304961;
-  font-size: 12px;
-}
-
-.demo-user small {
-  margin-top: 3px;
-  color: var(--muted);
-  font-size: 11px;
-}
-
 @keyframes grid-drift {
   from {
     transform: translate3d(0, 0, 0);

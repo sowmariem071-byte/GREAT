@@ -3,15 +3,6 @@ import { getCurrentUser } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
-const demoUsers = [
-  ["龚锐", "gr", "管理员"],
-  ["胡欣怡", "hxy", "编导"],
-  ["王煊", "wx", "编导"],
-  ["单萱萱", "sxx", "编导"],
-  ["贺玲玥", "hly", "剪辑"],
-  ["黄炜琪", "hwq", "剪辑"],
-];
-
 export default async function LoginPage({
   searchParams,
 }: {
@@ -54,11 +45,11 @@ export default async function LoginPage({
           <form action="/api/auth/login" className="glass-form" method="post">
             <label className="field">
               <span>账号</span>
-              <input name="email" type="text" defaultValue="gr" autoComplete="username" required />
+              <input name="email" type="text" autoComplete="username" required />
             </label>
             <label className="field">
               <span>密码</span>
-              <input name="password" type="password" defaultValue="zzb888" autoComplete="current-password" required />
+              <input name="password" type="password" autoComplete="current-password" required />
             </label>
             {params.error ? <p className="form-error">账号、密码或用户状态不正确。</p> : null}
             <button className="primary-action" type="submit">登录工作台</button>
@@ -77,24 +68,6 @@ export default async function LoginPage({
             <div className="orbit-chip orbit-chip-one">脚本信号</div>
             <div className="orbit-chip orbit-chip-two">审核队列</div>
             <div className="orbit-chip orbit-chip-three">库存池</div>
-          </div>
-
-          <div className="auth-card auth-demo">
-            <div className="panel-title">
-              <h3>种子账号</h3>
-              <span>默认密码 zzb888</span>
-            </div>
-            <div className="demo-list">
-              {demoUsers.map(([name, account, role]) => (
-                <div className="demo-user" key={account}>
-                  <span>{name.slice(0, 1)}</span>
-                  <div>
-                    <strong>{name} · {role}</strong>
-                    <small>{account}</small>
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </aside>
       </main>
