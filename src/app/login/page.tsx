@@ -23,13 +23,33 @@ export default async function LoginPage({
 
   return (
     <>
-      <div className="ambient ambient-one"></div>
-      <div className="ambient ambient-two"></div>
-      <main className="auth-shell">
-        <section className="auth-card">
-          <p className="eyebrow">Content Calendar Studio</p>
-          <h1>内容排期管理系统</h1>
-          <p className="auth-copy">从脚本到库存，把每天的产出和风险放在一个轻盈的工作台里。</p>
+      <div className="login-stage" aria-hidden="true">
+        <div className="login-grid"></div>
+        <div className="login-orb login-orb-one"></div>
+        <div className="login-orb login-orb-two"></div>
+        <div className="login-beam login-beam-one"></div>
+        <div className="login-beam login-beam-two"></div>
+        <span className="login-pulse login-pulse-one"></span>
+        <span className="login-pulse login-pulse-two"></span>
+        <span className="login-pulse login-pulse-three"></span>
+      </div>
+
+      <main className="auth-shell auth-shell-tech">
+        <section className="auth-card auth-login-card">
+          <div className="auth-brand-row">
+            <span className="auth-brand-mark">排</span>
+            <div>
+              <p className="eyebrow">Content Calendar Studio</p>
+              <h1>内容排期管理系统</h1>
+            </div>
+          </div>
+          <p className="auth-copy">脚本、剪辑、审核、库存，进入同一个轻盈工作台。</p>
+
+          <div className="auth-signal-row" aria-label="系统状态">
+            <span>脚本库</span>
+            <span>剪辑流转</span>
+            <span>发布库存</span>
+          </div>
 
           <form action="/api/auth/login" className="glass-form" method="post">
             <label className="field">
@@ -45,21 +65,36 @@ export default async function LoginPage({
           </form>
         </section>
 
-        <aside className="auth-card auth-demo">
-          <div className="panel-title">
-            <h3>种子账号</h3>
-            <span>默认密码 zzb888</span>
+        <aside className="auth-visual-panel">
+          <div className="login-orbit-card" aria-hidden="true">
+            <div className="orbit-ring orbit-ring-one"></div>
+            <div className="orbit-ring orbit-ring-two"></div>
+            <div className="orbit-ring orbit-ring-three"></div>
+            <div className="orbit-core">
+              <span>Content Flow</span>
+              <strong>Live</strong>
+            </div>
+            <div className="orbit-chip orbit-chip-one">脚本信号</div>
+            <div className="orbit-chip orbit-chip-two">审核队列</div>
+            <div className="orbit-chip orbit-chip-three">库存池</div>
           </div>
-          <div className="demo-list">
-            {demoUsers.map(([name, account, role]) => (
-              <div className="demo-user" key={account}>
-                <span>{name.slice(0, 1)}</span>
-                <div>
-                  <strong>{name} · {role}</strong>
-                  <small>{account}</small>
+
+          <div className="auth-card auth-demo">
+            <div className="panel-title">
+              <h3>种子账号</h3>
+              <span>默认密码 zzb888</span>
+            </div>
+            <div className="demo-list">
+              {demoUsers.map(([name, account, role]) => (
+                <div className="demo-user" key={account}>
+                  <span>{name.slice(0, 1)}</span>
+                  <div>
+                    <strong>{name} · {role}</strong>
+                    <small>{account}</small>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </aside>
       </main>
