@@ -13,64 +13,49 @@ export default async function LoginPage({
   const params = await searchParams;
 
   return (
-    <>
-      <div className="login-stage" aria-hidden="true">
-        <div className="login-grid"></div>
-        <div className="login-orb login-orb-one"></div>
-        <div className="login-orb login-orb-two"></div>
-        <div className="login-beam login-beam-one"></div>
-        <div className="login-beam login-beam-two"></div>
-        <span className="login-pulse login-pulse-one"></span>
-        <span className="login-pulse login-pulse-two"></span>
-        <span className="login-pulse login-pulse-three"></span>
-      </div>
+    <main className="login-page">
+      <header className="login-topbar">
+        <strong>母婴事业部</strong>
+        <a href="https://ihmzoectzzq0.meoo.fun/" target="_blank" rel="noreferrer">
+          进入【蒸蒸爸官网】
+        </a>
+      </header>
 
-      <main className="auth-shell auth-shell-tech">
-        <section className="auth-card auth-login-card">
-          <div className="auth-brand-row">
-            <span className="auth-brand-mark">排</span>
-            <div>
-              <p className="eyebrow">Content Calendar Studio</p>
-              <h1>内容排期管理系统</h1>
-            </div>
+      <section className="login-board" aria-label="内容排期管理系统登录">
+        <figure className="login-illustration-card">
+          <img src="/images/cartoon-parenting-character.png" alt="蒸蒸爸与孩子的中式育儿插画" />
+        </figure>
+
+        <section className="login-form-card">
+          <div className="login-form-inner">
+            <p className="login-kicker">Content Calendar Studio</p>
+            <h1>欢迎登录</h1>
+            <p>登录母婴事业部后台，请输入账号信息</p>
+
+            <form action="/api/auth/login" className="login-form" method="post">
+              <label className="login-field">
+                <span aria-hidden="true">♡</span>
+                <input name="email" type="text" placeholder="账号" autoComplete="username" required />
+              </label>
+
+              <label className="login-field">
+                <span aria-hidden="true">⌘</span>
+                <input name="password" type="password" placeholder="密码" autoComplete="current-password" required />
+              </label>
+
+              {params.error ? <p className="form-error">账号、密码或用户状态不正确。</p> : null}
+
+              <div className="login-help-row">
+                <span></span>
+                <a href="mailto:admin@example.com">忘记密码？</a>
+              </div>
+
+              <button className="login-submit" type="submit">登录</button>
+              <a className="login-contact" href="mailto:admin@example.com">注册 / 联系管理员</a>
+            </form>
           </div>
-          <p className="auth-copy">脚本、剪辑、审核、库存，进入同一个轻盈工作台。</p>
-
-          <div className="auth-signal-row" aria-label="系统状态">
-            <span>脚本库</span>
-            <span>剪辑流转</span>
-            <span>发布库存</span>
-          </div>
-
-          <form action="/api/auth/login" className="glass-form" method="post">
-            <label className="field">
-              <span>账号</span>
-              <input name="email" type="text" autoComplete="username" required />
-            </label>
-            <label className="field">
-              <span>密码</span>
-              <input name="password" type="password" autoComplete="current-password" required />
-            </label>
-            {params.error ? <p className="form-error">账号、密码或用户状态不正确。</p> : null}
-            <button className="primary-action" type="submit">登录工作台</button>
-          </form>
         </section>
-
-        <aside className="auth-visual-panel">
-          <div className="login-orbit-card" aria-hidden="true">
-            <div className="orbit-ring orbit-ring-one"></div>
-            <div className="orbit-ring orbit-ring-two"></div>
-            <div className="orbit-ring orbit-ring-three"></div>
-            <div className="orbit-core">
-              <span>Content Flow</span>
-              <strong>Live</strong>
-            </div>
-            <div className="orbit-chip orbit-chip-one">脚本信号</div>
-            <div className="orbit-chip orbit-chip-two">审核队列</div>
-            <div className="orbit-chip orbit-chip-three">库存池</div>
-          </div>
-        </aside>
-      </main>
-    </>
+      </section>
+    </main>
   );
 }
