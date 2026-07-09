@@ -1,0 +1,225 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  DIRECTOR
+  EDITOR
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum ScriptCategory {
+  TRADITIONAL
+  ASSIST
+  FEMALE
+}
+
+enum VideoType {
+  CHINESE_PARENTING
+  FEMALE
+}
+
+enum VideoStatus {
+  PENDING_EDIT
+  IN_PROGRESS
+  PENDING_REVIEW
+  NEEDS_REVISION
+  APPROVED
+  READY_TO_PUBLISH
+  SCHEDULED
+  PUBLISHED
+  STOCK
+}
+
+enum ReviewDecision {
+  NEEDS_REVISION
+  APPROVED
+}
+
+enum ScheduleStatus {
+  SCHEDULED
+  PUBLISHED
+  CANCELED
+}
+
+enum NotificationType {
+  DEADLINE_REMINDER
+  SYSTEM
+}
+
+model User {
+  id           String     @id @default(cuid())
+  email        String     @unique
+  name         String
+  role         Role
+  avatarUrl    String?
+  passwordHash String
+  status       UserStatus @default(ACTIVE)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  sessions          Session[]
+  dailyTargets      DailyTarget[]
+  scripts           Script[]          @relation("ScriptAuthor")
+  directedVideos    VideoTask[]       @relation("VideoDirector")
+  editingVideos     VideoTask[]       @relation("VideoEditor")
+  reviewRounds      ReviewRound[]     @relation("ReviewCreator")
+  notifications     Notification[]
+  themePreference   ThemePreference?
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  tokenHash String   @unique
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model DailyTarget {
+  id                     String   @id @default(cuid())
+  userId                 String
+  chineseParentingScripts Int     @default(0)
+  femaleScripts          Int      @default(0)
+  editingVideos          Int      @default(0)
+  effectiveFrom          DateTime @default(now())
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, effectiveFrom])
+}
+
+model Script {
+  id        String         @id @default(cuid())
+  title     String
+  body      String
+  category  ScriptCategory
+  authorId  String
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  author User        @relation("ScriptAuthor", fields: [authorId], references: [id])
+  videos VideoTask[]
+
+  @@index([authorId, createdAt])
+  @@index([category])
+}
+
+model VideoTask {
+  id                 String      @id @default(cuid())
+  scriptId           String
+  directorId         String
+  editorId           String
+  type               VideoType
+  materialUrl        String
+  plannedDeliveryAt  DateTime
+  plannedPublishDate DateTime?
+  publishTime        String?
+  durationSeconds    Int?
+  status             VideoStatus @default(PENDING_EDIT)
+  videoUrl           String?
+  notes              String?
+  deliveredAt        DateTime?
+  approvedAt         DateTime?
+  publishedAt        DateTime?
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+
+  script      Script            @relation(fields: [scriptId], references: [id])
+  director    User              @relation("VideoDirector", fields: [directorId], references: [id])
+  editor      User              @relation("VideoEditor", fields: [editorId], references: [id])
+  reviews     ReviewRound[]
+  schedules   PublishSchedule[]
+
+  @@index([editorId, status])
+  @@index([directorId, status])
+  @@index([plannedDeliveryAt])
+  @@index([plannedPublishDate])
+}
+
+model ReviewRound {
+  id          String         @id @default(cuid())
+  videoTaskId String
+  roundNumber Int
+  videoUrl    String
+  decision    ReviewDecision
+  comment     String?
+  createdById String
+  createdAt   DateTime       @default(now())
+
+  videoTask   VideoTask          @relation(fields: [videoTaskId], references: [id], onDelete: Cascade)
+  createdBy   User               @relation("ReviewCreator", fields: [createdById], references: [id])
+  attachments ReviewAttachment[]
+
+  @@unique([videoTaskId, roundNumber])
+}
+
+model ReviewAttachment {
+  id            String   @id @default(cuid())
+  reviewRoundId String
+  fileName      String
+  objectKey     String
+  url           String
+  contentType   String?
+  createdAt     DateTime @default(now())
+
+  reviewRound ReviewRound @relation(fields: [reviewRoundId], references: [id], onDelete: Cascade)
+}
+
+model PublishSchedule {
+  id                 String         @id @default(cuid())
+  videoTaskId         String
+  plannedPublishDate DateTime
+  publishTime        String
+  status             ScheduleStatus @default(SCHEDULED)
+  publishUrl         String?
+  publishedAt        DateTime?
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+
+  videoTask VideoTask @relation(fields: [videoTaskId], references: [id], onDelete: Cascade)
+
+  @@index([plannedPublishDate, status])
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  type      NotificationType
+  title     String
+  message   String
+  dueAt     DateTime?
+  readAt    DateTime?
+  createdAt DateTime         @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, readAt])
+}
+
+model ThemePreference {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  presetName      String
+  accent          String
+  accent2         String
+  accent3         String
+  backgroundStyle String   @default("glass-mint")
+  updatedAt       DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}

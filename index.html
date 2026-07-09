@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>内容排期管理系统 UI 预览</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <div class="ambient ambient-three"></div>
+
+    <main class="app-shell" aria-label="内容排期管理系统 UI 预览">
+      <aside class="side-nav" aria-label="主导航">
+        <div class="brand-mark" title="内容中枢">排</div>
+        <nav class="nav-items">
+          <button class="nav-item active" type="button" aria-label="首页" title="首页" data-page="home">
+            <span>⌂</span>
+            <small>首页</small>
+          </button>
+          <button class="nav-item" type="button" aria-label="脚本库" title="脚本库" data-page="scripts">
+            <span>□</span>
+            <small>脚本</small>
+          </button>
+          <button class="nav-item" type="button" aria-label="视频总览" title="视频总览" data-page="videos">
+            <span>▷</span>
+            <small>视频</small>
+          </button>
+          <button class="nav-item" type="button" aria-label="审核" title="审核" data-page="review">
+            <span>✓</span>
+            <small>审核</small>
+          </button>
+          <button class="nav-item" type="button" aria-label="排期" title="排期" data-page="schedule">
+            <span>◇</span>
+            <small>排期</small>
+          </button>
+          <button class="nav-item" type="button" aria-label="库存" title="库存" data-page="inventory">
+            <span>▣</span>
+            <small>库存</small>
+          </button>
+        </nav>
+        <button class="nav-item muted" type="button" aria-label="设置" title="设置" data-settings="true">
+          <span>⚙</span>
+          <small>设置</small>
+        </button>
+      </aside>
+
+      <section class="content-pane">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Content Calendar Studio</p>
+            <h1 id="pageTitle">内容排期管理系统</h1>
+          </div>
+          <div class="role-switcher" role="tablist" aria-label="角色切换">
+            <button class="role-tab active" type="button" data-role="admin" role="tab" aria-selected="true">
+              管理员 · 龚锐
+            </button>
+            <button class="role-tab" type="button" data-role="director" role="tab" aria-selected="false">
+              编导 · 胡欣怡
+            </button>
+            <button class="role-tab" type="button" data-role="editor" role="tab" aria-selected="false">
+              剪辑 · 贺玲玥
+            </button>
+          </div>
+        </header>
+
+        <div class="dashboard-grid">
+          <section class="main-dashboard" id="mainDashboard"></section>
+          <aside class="right-panel" id="rightPanel"></aside>
+        </div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">已切换视图</div>
+
+    <div class="theme-backdrop" id="themeBackdrop" hidden>
+      <section class="theme-panel" role="dialog" aria-modal="true" aria-labelledby="themePanelTitle">
+        <header class="theme-panel-head">
+          <div>
+            <p class="eyebrow">Personal Theme</p>
+            <h2 id="themePanelTitle">配色调整</h2>
+          </div>
+          <button class="theme-close" type="button" aria-label="关闭配色设置" data-theme-close>×</button>
+        </header>
+
+        <div class="theme-section">
+          <div class="theme-section-title">
+            <h3>预设主题</h3>
+            <span>点击即预览</span>
+          </div>
+          <div class="preset-grid" id="presetGrid"></div>
+        </div>
+
+        <div class="theme-section">
+          <div class="theme-section-title">
+            <h3>自定义点缀色</h3>
+            <span>实时应用</span>
+          </div>
+          <div class="color-grid">
+            <label>
+              <span>主色</span>
+              <input class="theme-color-input" id="themeAccent" type="color" data-color-key="accent" />
+            </label>
+            <label>
+              <span>辅助色</span>
+              <input class="theme-color-input" id="themeAccent2" type="color" data-color-key="accent2" />
+            </label>
+            <label>
+              <span>强调色</span>
+              <input class="theme-color-input" id="themeAccent3" type="color" data-color-key="accent3" />
+            </label>
+          </div>
+        </div>
+
+        <div class="theme-section">
+          <div class="theme-section-title">
+            <h3>效果预览</h3>
+            <span id="themePresetName">浅蓝薄荷</span>
+          </div>
+          <div class="theme-preview">
+            <div class="preview-card">
+              <span class="preview-dot"></span>
+              <div>
+                <strong>今日完成</strong>
+                <p>按钮、图表、进度条会跟随主题变化</p>
+              </div>
+            </div>
+            <div class="preview-progress"><i></i></div>
+            <button type="button">按钮预览</button>
+          </div>
+        </div>
+
+        <footer class="theme-actions">
+          <button class="ghost-action" type="button" data-theme-reset>恢复默认</button>
+          <button class="primary-action" type="button" data-theme-save>保存配色</button>
+        </footer>
+      </section>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
