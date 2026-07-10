@@ -2128,3 +2128,30 @@
   - 已通过：公网 `POST /api/auth/login` 使用 `gr / zzb888` 返回 307 并写入会话。
   - 已通过：带会话访问 `/dashboard`、`/scripts`、`/videos`、`/review`、`/schedule`、`/inventory`、`/people`、`/settings` 全部返回 200。
   - 已通过：Vercel 近 10 分钟运行日志仅有正常 info 访问记录，未再出现 `EMAXCONNSESSION`、`prepared statement already exists` 或 500 错误。
+
+## 2026-07-10 16:05 - wx / hly 公网全流程验证
+- 目标：使用编导账号 `wx` 和剪辑账号 `hly`，在 Vercel 公网环境完整验证脚本、视频任务、剪辑、审核退修、再提交、审核通过、排期和发布归档链路。
+- 验证账号：
+  - 编导：`wx / zzb888`
+  - 剪辑：`hly / zzb888`
+- 测试数据：
+  - 脚本标题：`全流程测试-20260710074438-王煊-贺玲玥`
+  - 视频任务 ID：`cmremvym70005jr045ktvhbck`
+  - 排期 ID：`cmren5nof000bjr047z38ahu1`
+  - 素材链接：`https://example.com/test/material-20260710074438`
+  - 初版成片：`https://video.example.com/test/20260710074438-hly-final`
+  - 退修后成片：`https://video.example.com/test/20260710074438-hly-revision`
+  - 发布链接：`https://published.example.com/test/20260710074438`
+- 验证结果：
+  - 已通过：`wx` 可访问 `/dashboard`、`/scripts`、`/videos`、`/review`、`/schedule`、`/inventory`，`hly` 可访问 `/dashboard`、`/editing`。
+  - 已通过：`hly` 访问 `/videos` 和 `/review` 会被重定向，角色权限符合预期。
+  - 已通过：`wx` 在脚本资产库创建脚本，并从脚本卡片下达视频任务，系统分配剪辑给贺玲玥。
+  - 已通过：`hly` 将任务流转为剪辑中，并提交待审核成片与视频秒数。
+  - 已通过：`wx` 在审核中心提交“需修改”，审核历史保留 1 轮，`hly` 剪辑队列可见需修改任务。
+  - 已通过：`hly` 修改后再次提交待审核，`wx` 审核通过后任务进入排期。
+  - 已通过：排期页显示已规划到 `07/12 19:30`，手动标记发布后进入已发布归档。
+  - 已通过：视频任务池 `已发布` 筛选可看到该任务，状态为已发布，审核结果为已通过，视频秒数为 `96s`。
+  - 已通过：Vercel 近 20 分钟运行日志只出现正常 info 请求，未出现服务端 error。
+- 观察项：
+  - 新增脚本提交过程中出现过同名脚本重复入库，后续建议增加提交中禁用按钮或服务端幂等保护。
+  - 库存页目前显示已发布数量，但已发布明细集中在排期日历页；如果希望库存页也展示已发布归档详情，后续可补一个归档列表区域。
