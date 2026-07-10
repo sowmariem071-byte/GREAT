@@ -2024,3 +2024,21 @@
 - 待验证：
   - 本地 `typecheck`、`lint`、`build`。
   - 推送后重新部署并再次验证公网 `POST /api/auth/login`、`/dashboard` 及核心页面链路。
+## 2026-07-10 10:14 - Vercel 生产登录复测结果：数据库密码错误
+- 目标：验证 `DATAASE_URL` 临时兼容部署后，公网登录是否能继续进入会话和核心页面链路。
+- 验证结果：
+  - 已通过：`npm run typecheck`
+  - 已通过：`npm run lint`
+  - 已通过：`npm run build`
+  - 已通过：提交 `c799ff8` 已推送到 `origin/main` 和 `vercel-origin/main`，Vercel 生产部署 `zhengzhengba-gxqysye7v-zhengzhengba.vercel.app` 已 Ready。
+  - 已通过：公网 `https://zhengzhengba.vercel.app/login` 返回 200。
+  - 未通过：公网 `POST /api/auth/login` 仍返回 500。
+- 生产日志证据：
+  - Vercel 运行日志显示 Prisma 已不再报 `DATABASE_URL` 缺失，说明临时兼容变量已被读取。
+  - 新错误为数据库认证失败：当前连接串使用的 `postgres` 用户密码不正确。
+- 当前阻塞点：
+  - Vercel Production 中必须重新配置正确的 Supabase Postgres/Pooler 连接串到 `DATABASE_URL`。
+  - 现有 `DATAASE_URL` 虽然可被兼容读取，但其中保存的数据库密码无效，无法继续验证登录、会话和核心页面。
+- 下一步：
+  - 用户在 Vercel Production 环境变量中更新 `DATABASE_URL` 为正确连接串后，重新部署。
+  - 重新验证 `gr / zzb888` 登录、`/dashboard`、`/scripts`、`/videos`、`/review`、`/schedule`、`/inventory`、`/people`、`/settings`。
