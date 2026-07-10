@@ -2124,4 +2124,7 @@
   - 已通过：`npm run typecheck`
   - 已通过：`npm run lint`
   - 已通过：`npm run build`
-  - 待推送部署后复测：公网登录、`/dashboard`、`/scripts` 和核心页面返回状态。
+  - 已通过：提交 `31532a1` 已推送到 `origin/main` 和 `vercel-origin/main`，Vercel 生产部署 `zhengzhengba-ylhk8371y-zhengzhengba.vercel.app` 已 Ready。
+  - 已通过：公网 `POST /api/auth/login` 使用 `gr / zzb888` 返回 307 并写入会话。
+  - 已通过：带会话访问 `/dashboard`、`/scripts`、`/videos`、`/review`、`/schedule`、`/inventory`、`/people`、`/settings` 全部返回 200。
+  - 已通过：Vercel 近 10 分钟运行日志仅有正常 info 访问记录，未再出现 `EMAXCONNSESSION`、`prepared statement already exists` 或 500 错误。
