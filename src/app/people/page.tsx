@@ -215,7 +215,7 @@ export default async function PeoplePage() {
                     </div>
 
                     <div className="people-card-actions">
-                      <Link href={`/people/${member.id}`}>查看主页</Link>
+                      <Link href={`/people/${member.id}`} prefetch={false}>查看主页</Link>
                       <Modal
                         trigger="调整目标"
                         title={`${member.name}的每日目标`}

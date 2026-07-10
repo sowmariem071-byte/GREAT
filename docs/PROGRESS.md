@@ -2075,3 +2075,30 @@
   - 已通过：`npm run lint`
   - 已通过：`npm run build`
   - 已通过：源码检查确认 `AppShell` 不再渲染 `brand-pill`，公共内容区新增 `app-brand-title`。
+
+## 2026-07-10 14:50 - 修复 Vercel 生产连接池耗尽导致的 Application Error
+- 目标：排查公网 `zhengzhengba.vercel.app` 出现 `Application error`，digest 为 `530731495` 的服务端异常。
+- 发现：
+  - Vercel 运行日志显示 digest `530731495` 对应 `/dashboard` 服务端渲染异常。
+  - 根因不是本轮 UI 品牌位置调整，而是 Prisma 查询 Supabase 时返回 `FATAL: (EMAXCONNSESSION) max clients reached in session mode - max clients are limited to pool_size: 15`。
+  - 日志中同一秒出现 `/dashboard`、`/scripts`、`/videos`、`/review`、`/schedule`、`/inventory`、`/settings` 多个页面请求，说明 Next.js 默认 Link 预取在登录后并发预加载多个数据库页面，放大了连接池压力。
+- 变更：
+  - 在 `src/lib/prisma.ts` 增加数据库连接串规范化：Supabase pooler host 若使用 session mode `5432` 端口，生产运行时自动切换到 transaction pooler `6543`。
+  - 为 Prisma 连接串补充 `connection_limit=1` 和 `pool_timeout=20`，降低 Vercel serverless 实例的连接占用。
+  - 给 `AppShell` 左侧主导航和设置入口增加 `prefetch={false}`，关闭登录后全站导航自动预取。
+  - 给库存页和人员页的业务跳转 Link 增加 `prefetch={false}`，避免列表类页面自动预取详情或排期页。
+  - 更新 `.env.example`、需求文档和开发计划，记录 Vercel + Supabase 生产连接池规范。
+- 涉及文件：
+  - `src/lib/prisma.ts`
+  - `src/components/AppShell.tsx`
+  - `src/app/inventory/page.tsx`
+  - `src/app/people/page.tsx`
+  - `.env.example`
+  - `docs/REQUIREMENTS.md`
+  - `docs/PLAN.md`
+  - `docs/PROGRESS.md`
+- 验证：
+  - 已通过：`npm run typecheck`
+  - 已通过：`npm run lint`
+  - 已通过：`npm run build`
+  - 待部署后复测：公网 `/login`、登录 POST、`/dashboard` 和核心页面。

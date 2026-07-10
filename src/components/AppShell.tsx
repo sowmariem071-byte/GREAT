@@ -74,13 +74,13 @@ export async function AppShell({
         <aside className="side-nav" aria-label="主导航">
           <nav className="nav-items">
             {visibleNav.map((item) => (
-              <Link className={`nav-item ${active === item.key ? "active" : ""}`} href={item.href} key={item.key}>
+              <Link className={`nav-item ${active === item.key ? "active" : ""}`} href={item.href} key={item.key} prefetch={false}>
                 <span>{item.icon}</span>
                 <small>{item.label}</small>
               </Link>
             ))}
           </nav>
-          <Link className={`nav-item muted ${active === "settings" ? "active" : ""}`} href="/settings">
+          <Link className={`nav-item muted ${active === "settings" ? "active" : ""}`} href="/settings" prefetch={false}>
             <span>⚙</span>
             <small>设置</small>
           </Link>

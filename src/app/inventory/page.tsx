@@ -85,7 +85,7 @@ function InventoryVideoCard({ video, variant }: { video: InventoryVideo; variant
       </div>
       <div className="inventory-card-footer">
         <span>{plannedText}</span>
-        <Link href="/schedule">{actionText}</Link>
+        <Link href="/schedule" prefetch={false}>{actionText}</Link>
       </div>
     </article>
   );
@@ -119,7 +119,7 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
             <h1>库存池</h1>
             <p>把已审核内容分成可发布和待安排屯片，清楚知道手里还有多少内容可以调度。</p>
           </div>
-          <Link className="inventory-hero-card inventory-schedule-link" href="/schedule">
+          <Link className="inventory-hero-card inventory-schedule-link" href="/schedule" prefetch={false}>
             <span>Schedule Signal</span>
             <strong>去排期日历</strong>
             <p>查看未来发布安排</p>
@@ -130,6 +130,7 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
           <Link
             className={`inventory-signal-card ${selectedStatus === VideoStatus.READY_TO_PUBLISH ? "active" : ""}`}
             href="/inventory?status=READY_TO_PUBLISH"
+            prefetch={false}
           >
             <span>可发布</span>
             <strong>{readyToPublish.length}</strong>
@@ -138,6 +139,7 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
           <Link
             className={`inventory-signal-card ${selectedStatus === VideoStatus.STOCK ? "active" : ""}`}
             href="/inventory?status=STOCK#stock"
+            prefetch={false}
           >
             <span>屯片池</span>
             <strong>{stock.length}</strong>
@@ -146,12 +148,13 @@ export default async function InventoryPage({ searchParams }: InventoryPageProps
           <Link
             className={`inventory-signal-card ${selectedStatus === VideoStatus.SCHEDULED ? "active" : ""}`}
             href="/inventory?status=SCHEDULED"
+            prefetch={false}
           >
             <span>待发布</span>
             <strong>{scheduled.length}</strong>
             <p>已进入排期</p>
           </Link>
-          <Link className="inventory-signal-card" href="/schedule#published">
+          <Link className="inventory-signal-card" href="/schedule#published" prefetch={false}>
             <span>已发布</span>
             <strong>{publishedSchedules.length}</strong>
             <p>最近 60 条归档</p>
