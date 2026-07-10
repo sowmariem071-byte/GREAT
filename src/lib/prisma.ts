@@ -17,7 +17,7 @@ function normalizeDatabaseUrl(rawUrl: string | undefined) {
     }
 
     if (!url.searchParams.has("connection_limit")) {
-      url.searchParams.set("connection_limit", "1");
+      url.searchParams.set("connection_limit", "2");
     }
 
     if (!url.searchParams.has("pool_timeout")) {

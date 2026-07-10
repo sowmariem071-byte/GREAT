@@ -86,6 +86,8 @@ model Session {
   createdAt DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([expiresAt])
 }
 
 model DailyTarget {
@@ -146,9 +148,14 @@ model VideoTask {
   schedules   PublishSchedule[]
 
   @@index([editorId, status])
+  @@index([editorId, deliveredAt])
   @@index([directorId, status])
+  @@index([directorId, createdAt])
+  @@index([directorId, plannedPublishDate])
   @@index([plannedDeliveryAt])
   @@index([plannedPublishDate])
+  @@index([status, createdAt])
+  @@index([status, updatedAt])
 }
 
 model ReviewRound {
@@ -166,6 +173,8 @@ model ReviewRound {
   attachments ReviewAttachment[]
 
   @@unique([videoTaskId, roundNumber])
+  @@index([videoTaskId, createdAt])
+  @@index([createdAt])
 }
 
 model ReviewAttachment {
@@ -194,6 +203,8 @@ model PublishSchedule {
   videoTask VideoTask @relation(fields: [videoTaskId], references: [id], onDelete: Cascade)
 
   @@index([plannedPublishDate, status])
+  @@index([status, publishedAt])
+  @@index([videoTaskId, status])
 }
 
 model Notification {
@@ -209,6 +220,8 @@ model Notification {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, readAt])
+  @@index([userId, readAt, createdAt])
+  @@index([userId, type, createdAt])
 }
 
 model ThemePreference {

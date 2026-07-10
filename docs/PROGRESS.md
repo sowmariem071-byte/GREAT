@@ -2155,3 +2155,39 @@
 - 观察项：
   - 新增脚本提交过程中出现过同名脚本重复入库，后续建议增加提交中禁用按钮或服务端幂等保护。
   - 库存页目前显示已发布数量，但已发布明细集中在排期日历页；如果希望库存页也展示已发布归档详情，后续可补一个归档列表区域。
+
+## 2026-07-10 16:40 - 登录后页面跳转性能优化
+- 目标：解决公网环境中登录后页面间跳转反应慢的问题，在不破坏现有 UI 和业务逻辑的前提下减少服务端渲染等待。
+- 发现：
+  - 公网实测 `wx` 页面跳转：`/dashboard` 约 3.5-3.9s，`/scripts` 约 2.4s，`/videos` 约 2.9-3.0s，`/review` 约 3.2s，`/inventory` 最高约 4.7s。
+  - 公网实测 `hly` 页面跳转：`/dashboard` 约 3.4s，`/editing` 约 2.4s。
+  - Vercel 日志无 500 或连接池错误，说明当前问题是慢请求，不是服务端崩溃。
+  - 所有业务页面均为 `force-dynamic` 服务端渲染，每次跳转都会重新认证、查通知并执行页面业务查询。
+  - 之前为解决 Supabase 连接池耗尽而关闭主导航预取，避免了并发爆池，但也让用户点击后才开始加载页面。
+- 变更：
+  - 新增 `SmartNavLink` 客户端导航组件，主导航保持默认不自动预取，但在鼠标悬停、键盘聚焦或触摸时按需 `router.prefetch()`，减少用户主动跳转等待。
+  - `AppShell` 未读通知查询改为 `select` 必要字段，减少每页公共布局查询负载。
+  - Prisma 连接串规范化默认补充 `connection_limit=2`，在仍控制连接池压力的前提下，为单次页面渲染保留少量并行查询能力。
+  - `ensureDeadlineReminders()` 增加当天运行节流；活跃用户和最新目标合并查询；已存在提醒统一批量查询；编导今日脚本完成数改为 count 查询，避免每次首页扫描并拉取脚本列表。
+  - 新增性能索引 migration，覆盖常用的 session 过期、视频队列、编导/剪辑维度、审核历史、排期归档和通知查询。
+  - 同步更新 `.env.example`、需求文档和开发计划中的生产连接池与预取策略。
+- 涉及文件：
+  - `src/components/SmartNavLink.tsx`
+  - `src/components/AppShell.tsx`
+  - `src/lib/prisma.ts`
+  - `src/lib/reminders.ts`
+  - `prisma/schema.prisma`
+  - `prisma/migrations/20260710163500_performance_indexes/migration.sql`
+  - `.env.example`
+  - `docs/REQUIREMENTS.md`
+  - `docs/PLAN.md`
+  - `docs/PROGRESS.md`
+- 验证：
+  - 已通过：`npm run prisma:generate`
+  - 已通过：`npm run typecheck`
+  - 已通过：`npm run lint`
+  - 已通过：`npm run build`
+  - 已通过：本地 `.env` 指向的 PostgreSQL 成功应用 `20260710163500_performance_indexes` migration。
+- 注意：
+  - Vercel `env pull` 拉到的生产 `DATABASE_URL` 行为空值或占位值，Prisma CLI 无法从本机直接连接生产 Supabase 应用索引 migration。
+  - 生产索引仍需在具备真实 Supabase 连接串的环境执行 `npx prisma migrate deploy`，或在 Supabase SQL Editor 中执行该 migration SQL。

@@ -1,7 +1,7 @@
 import type { CSSProperties, ReactNode } from "react";
-import Link from "next/link";
 import { Role } from "@prisma/client";
 import { readNotificationAction } from "@/app/actions";
+import { SmartNavLink } from "@/components/SmartNavLink";
 import { formatDateTime } from "@/lib/dates";
 import { prisma } from "@/lib/prisma";
 
@@ -61,6 +61,7 @@ export async function AppShell({
   const notifications = await prisma.notification.findMany({
     where: { userId: user.id, readAt: null },
     orderBy: { createdAt: "desc" },
+    select: { id: true, title: true, message: true, createdAt: true },
     take: 3,
   });
 
@@ -74,16 +75,16 @@ export async function AppShell({
         <aside className="side-nav" aria-label="主导航">
           <nav className="nav-items">
             {visibleNav.map((item) => (
-              <Link className={`nav-item ${active === item.key ? "active" : ""}`} href={item.href} key={item.key} prefetch={false}>
+              <SmartNavLink className={`nav-item ${active === item.key ? "active" : ""}`} href={item.href} key={item.key}>
                 <span>{item.icon}</span>
                 <small>{item.label}</small>
-              </Link>
+              </SmartNavLink>
             ))}
           </nav>
-          <Link className={`nav-item muted ${active === "settings" ? "active" : ""}`} href="/settings" prefetch={false}>
+          <SmartNavLink className={`nav-item muted ${active === "settings" ? "active" : ""}`} href="/settings">
             <span>⚙</span>
             <small>设置</small>
-          </Link>
+          </SmartNavLink>
         </aside>
 
         <section className="content-pane">

@@ -2,6 +2,10 @@ import { NotificationType, Role, VideoStatus } from "@prisma/client";
 import { endOfShanghaiDay, isAfterShanghaiReminderTime, startOfShanghaiDay } from "@/lib/dates";
 import { prisma } from "@/lib/prisma";
 
+const globalForReminders = globalThis as unknown as {
+  deadlineReminderRunKey?: string;
+};
+
 async function latestTarget(userId: string) {
   return prisma.dailyTarget.findFirst({
     where: { userId },
@@ -14,31 +18,49 @@ export async function ensureDeadlineReminders() {
 
   const start = startOfShanghaiDay();
   const end = endOfShanghaiDay();
+  const runKey = start.toISOString();
+  if (globalForReminders.deadlineReminderRunKey === runKey) return;
+
   const users = await prisma.user.findMany({
     where: { role: { in: [Role.DIRECTOR, Role.EDITOR] }, status: "ACTIVE" },
+    include: {
+      dailyTargets: {
+        orderBy: [{ effectiveFrom: "desc" }, { createdAt: "desc" }],
+        take: 1,
+      },
+    },
   });
+  if (users.length === 0) {
+    globalForReminders.deadlineReminderRunKey = runKey;
+    return;
+  }
+
+  const existingNotifications = await prisma.notification.findMany({
+    where: {
+      userId: { in: users.map((user) => user.id) },
+      type: NotificationType.DEADLINE_REMINDER,
+      createdAt: { gte: start, lt: end },
+    },
+    select: { userId: true },
+  });
+  const notifiedUserIds = new Set(existingNotifications.map((notification) => notification.userId));
 
   await Promise.all(
     users.map(async (user) => {
-      const existing = await prisma.notification.findFirst({
-        where: {
-          userId: user.id,
-          type: NotificationType.DEADLINE_REMINDER,
-          createdAt: { gte: start, lt: end },
-        },
-      });
-      if (existing) return;
+      if (notifiedUserIds.has(user.id)) return;
 
-      const target = await latestTarget(user.id);
+      const target = user.dailyTargets[0] ?? await latestTarget(user.id);
       if (!target) return;
 
       if (user.role === Role.DIRECTOR) {
-        const scripts = await prisma.script.findMany({
-          where: { authorId: user.id, createdAt: { gte: start, lt: end } },
-          select: { category: true },
-        });
-        const chineseDone = scripts.filter((script) => script.category !== "FEMALE").length;
-        const femaleDone = scripts.filter((script) => script.category === "FEMALE").length;
+        const [chineseDone, femaleDone] = await Promise.all([
+          prisma.script.count({
+            where: { authorId: user.id, createdAt: { gte: start, lt: end }, category: { not: "FEMALE" } },
+          }),
+          prisma.script.count({
+            where: { authorId: user.id, createdAt: { gte: start, lt: end }, category: "FEMALE" },
+          }),
+        ]);
         const chineseGap = Math.max(0, target.chineseParentingScripts - chineseDone);
         const femaleGap = Math.max(0, target.femaleScripts - femaleDone);
 
@@ -79,4 +101,6 @@ export async function ensureDeadlineReminders() {
       }
     }),
   );
+
+  globalForReminders.deadlineReminderRunKey = runKey;
 }
