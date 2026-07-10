@@ -263,7 +263,7 @@
 - 支持使用 Supabase 托管 PostgreSQL 作为公网数据库。
 - 支持使用 Vercel 部署公网 Web 服务。
 - 生产环境必须通过 Vercel 环境变量配置 `DATABASE_URL`、`SESSION_SECRET`、`APP_URL` 和对象存储相关密钥，禁止提交 `.env` 或明文密钥；若 Vercel/Supabase 使用 `POSTGRES_PRISMA_URL`、`POSTGRES_URL`、`POSTGRES_URL_NON_POOLING`、`SUPABASE_DATABASE_URL`、`SUPABASE_DB_URL` 或 `SUPABASE_POSTGRES_URL` 等数据库连接变量，应用会在服务端自动映射给 Prisma 使用。`DATAASE_URL` 仅作为本次 Vercel 变量拼写错误的临时兼容别名，后续正式配置仍以 `DATABASE_URL` 为准。
-- Vercel 生产环境连接 Supabase 时，需要优先使用 transaction pooler；应用层会把 Supabase pooler 的 session mode `5432` 端口自动规范到 `6543`，并补充 `connection_limit=1` 与 `pool_timeout=20`，避免 serverless 并发耗尽数据库连接。
+- Vercel 生产环境连接 Supabase 时，需要优先使用 transaction pooler；应用层会把 Supabase pooler 的 session mode `5432` 端口自动规范到 `6543`，并补充 `pgbouncer=true`、`connection_limit=1` 与 `pool_timeout=20`，避免 serverless 并发耗尽数据库连接，同时避免 Prisma prepared statement 与 Supabase transaction pooler 冲突。
 - 登录后公共导航和业务入口链接默认关闭 Next.js 自动预取，避免一屏渲染时并发预加载所有数据页导致 Supabase 连接池被打满。
 - Supabase 第一版只作为 Prisma 直连数据库使用，不依赖 Supabase Data API；数据库表启用 RLS 且不开放匿名客户端策略。
 - 本地没有 Docker 时，需要保留可替代的开发配置和说明。

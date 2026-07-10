@@ -6,8 +6,14 @@ function normalizeDatabaseUrl(rawUrl: string | undefined) {
   try {
     const url = new URL(rawUrl);
 
-    if (url.hostname.endsWith(".pooler.supabase.com") && url.port === "5432") {
+    const isSupabasePooler = url.hostname.endsWith(".pooler.supabase.com");
+
+    if (isSupabasePooler && url.port === "5432") {
       url.port = "6543";
+    }
+
+    if (isSupabasePooler && url.port === "6543" && !url.searchParams.has("pgbouncer")) {
+      url.searchParams.set("pgbouncer", "true");
     }
 
     if (!url.searchParams.has("connection_limit")) {

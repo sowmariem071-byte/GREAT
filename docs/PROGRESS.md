@@ -2102,3 +2102,26 @@
   - 已通过：`npm run lint`
   - 已通过：`npm run build`
   - 待部署后复测：公网 `/login`、登录 POST、`/dashboard` 和核心页面。
+
+## 2026-07-10 15:10 - 修复 Supabase transaction pooler 下 Prisma prepared statement 冲突
+- 目标：继续排查 Vercel 公网登录后 `/dashboard` 和 `/scripts` 返回 500 的新运行时异常。
+- 发现：
+  - 最新生产部署已 Ready，公网 `/login` 返回 200，`gr / zzb888` 登录接口返回 307 并写入 `content_session`。
+  - 带会话访问核心页面时，`/videos`、`/review`、`/schedule`、`/inventory`、`/people`、`/settings` 返回 200，但 `/dashboard` 和 `/scripts` 返回 500。
+  - Vercel 运行日志显示新错误为 `prepared statement "s0" already exists` / `prepared statement "s1" already exists`，发生在 `prisma.session.findUnique()`。
+  - 根因是生产连接串已被规范到 Supabase transaction pooler `6543` 后，Prisma 仍按默认 prepared statement 模式工作，需要启用 PgBouncer 兼容参数。
+- 变更：
+  - 在 `src/lib/prisma.ts` 的连接串规范化中，当识别到 Supabase pooler 且端口为 `6543` 时，自动补充 `pgbouncer=true`。
+  - 保留 `connection_limit=1` 和 `pool_timeout=20`，继续降低 Vercel serverless 对 Supabase 连接池的压力。
+  - 更新 `.env.example`、需求文档和开发计划，记录 `pgbouncer=true`、单连接限制和关闭预取共同构成生产连接池规范。
+- 涉及文件：
+  - `src/lib/prisma.ts`
+  - `.env.example`
+  - `docs/REQUIREMENTS.md`
+  - `docs/PLAN.md`
+  - `docs/PROGRESS.md`
+- 验证：
+  - 已通过：`npm run typecheck`
+  - 已通过：`npm run lint`
+  - 已通过：`npm run build`
+  - 待推送部署后复测：公网登录、`/dashboard`、`/scripts` 和核心页面返回状态。
