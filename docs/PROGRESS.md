@@ -2188,6 +2188,10 @@
   - 已通过：`npm run lint`
   - 已通过：`npm run build`
   - 已通过：本地 `.env` 指向的 PostgreSQL 成功应用 `20260710163500_performance_indexes` migration。
+  - 已通过：提交 `4936329` 已推送到 `origin/main` 和 `vercel-origin/main`，Vercel 生产部署 `zhengzhengba-qbgxygrlh-zhengzhengba.vercel.app` 已 Ready，主域名 `https://zhengzhengba.vercel.app` 已指向该部署。
+  - 已通过：公网主域名 `/login` 返回 200。
+  - 已通过：部署后 `wx` 冷启动测速中，首次 `/dashboard` 因提醒检查约 `6.55s`；随后热请求 `/dashboard` 约 `2.37s`，`/scripts` 约 `2.11s`，`/videos` 约 `2.13s`，`/review` 约 `2.49s`，`/schedule` 约 `2.22s`，`/inventory` 约 `2.30s`，`/settings` 约 `1.37s`。
+  - 已通过：Vercel 近 10 分钟运行日志只有正常 info 请求，未出现服务端 error。
 - 注意：
   - Vercel `env pull` 拉到的生产 `DATABASE_URL` 行为空值或占位值，Prisma CLI 无法从本机直接连接生产 Supabase 应用索引 migration。
   - 生产索引仍需在具备真实 Supabase 连接串的环境执行 `npx prisma migrate deploy`，或在 Supabase SQL Editor 中执行该 migration SQL。
