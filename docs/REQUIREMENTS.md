@@ -262,7 +262,7 @@
 - 支持 Docker 服务器部署。
 - 支持使用 Supabase 托管 PostgreSQL 作为公网数据库。
 - 支持使用 Vercel 部署公网 Web 服务。
-- 生产环境必须通过 Vercel 环境变量配置 `DATABASE_URL`、`SESSION_SECRET`、`APP_URL` 和对象存储相关密钥，禁止提交 `.env` 或明文密钥；若 Vercel/Supabase 使用 `POSTGRES_PRISMA_URL`、`POSTGRES_URL`、`POSTGRES_URL_NON_POOLING`、`SUPABASE_DATABASE_URL`、`SUPABASE_DB_URL` 或 `SUPABASE_POSTGRES_URL` 等数据库连接变量，应用会在服务端自动映射给 Prisma 使用。
+- 生产环境必须通过 Vercel 环境变量配置 `DATABASE_URL`、`SESSION_SECRET`、`APP_URL` 和对象存储相关密钥，禁止提交 `.env` 或明文密钥；若 Vercel/Supabase 使用 `POSTGRES_PRISMA_URL`、`POSTGRES_URL`、`POSTGRES_URL_NON_POOLING`、`SUPABASE_DATABASE_URL`、`SUPABASE_DB_URL` 或 `SUPABASE_POSTGRES_URL` 等数据库连接变量，应用会在服务端自动映射给 Prisma 使用。`DATAASE_URL` 仅作为本次 Vercel 变量拼写错误的临时兼容别名，后续正式配置仍以 `DATABASE_URL` 为准。
 - Supabase 第一版只作为 Prisma 直连数据库使用，不依赖 Supabase Data API；数据库表启用 RLS 且不开放匿名客户端策略。
 - 本地没有 Docker 时，需要保留可替代的开发配置和说明。
 - 时区固定为 Asia/Shanghai。

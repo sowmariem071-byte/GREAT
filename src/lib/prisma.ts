@@ -7,7 +7,8 @@ const databaseUrl =
   process.env.POSTGRES_URL_NON_POOLING ||
   process.env.SUPABASE_DATABASE_URL ||
   process.env.SUPABASE_DB_URL ||
-  process.env.SUPABASE_POSTGRES_URL;
+  process.env.SUPABASE_POSTGRES_URL ||
+  process.env.DATAASE_URL;
 
 if (!process.env.DATABASE_URL && databaseUrl) {
   process.env.DATABASE_URL = databaseUrl;

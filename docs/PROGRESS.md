@@ -2004,3 +2004,23 @@
   - `preview-editor.png`
 - 验证：页面可打开，角色切换正常，桌面与移动端做过基础检查。
 - 下一步：根据反馈调整首页精简度。
+## 2026-07-10 10:08 - Vercel 生产登录链路再次验证与变量兼容
+- 目标：在用户完成 Vercel 配置后，重新验证公网登录、会话和核心页面链路。
+- 发现：
+  - 最新生产部署 `zhengzhengba-jbj8rxylv-zhengzhengba.vercel.app` 已 Ready，并绑定 `https://zhengzhengba.vercel.app`。
+  - 公网 `/login` 返回 200，页面包含“母婴事业部”“进入【蒸蒸爸】官网”“欢迎登录”，且不再包含已删除的政策 checkbox 文案。
+  - 公网 `POST /api/auth/login` 仍返回 500。
+  - Vercel 运行日志显示 Prisma 初始化失败，根因为 `DATABASE_URL` 不存在。
+  - Vercel Production 环境变量列表中存在拼写错误的 `DATAASE_URL`，没有正确的 `DATABASE_URL`；该变量为加密敏感值，CLI 无法读出原文后复制改名。
+- 变更：
+  - 在 `src/lib/prisma.ts` 中增加 `DATAASE_URL` 临时兼容别名，运行时会把该变量映射给 Prisma 使用。
+  - 在 `.env.example`、需求文档和开发计划中注明 `DATAASE_URL` 仅用于兼容已出现的 Vercel 拼写错误变量，后续正式配置仍应统一使用 `DATABASE_URL`。
+- 涉及文件：
+  - `src/lib/prisma.ts`
+  - `.env.example`
+  - `docs/REQUIREMENTS.md`
+  - `docs/PLAN.md`
+  - `docs/PROGRESS.md`
+- 待验证：
+  - 本地 `typecheck`、`lint`、`build`。
+  - 推送后重新部署并再次验证公网 `POST /api/auth/login`、`/dashboard` 及核心页面链路。

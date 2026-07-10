@@ -8,3 +8,6 @@ coverage
 *.log
 uploads
 *.tsbuildinfo
+
+.vercel
+.env*

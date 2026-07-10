@@ -30,7 +30,7 @@
 
 ## 下一阶段优先级
 
-1. Vercel 公网部署：配置生产 `DATABASE_URL`、`SESSION_SECRET`、`APP_URL` 和对象存储环境变量后执行部署。
+1. Vercel 公网部署：配置生产 `DATABASE_URL`、`SESSION_SECRET`、`APP_URL` 和对象存储环境变量后执行部署；`DATAASE_URL` 仅用于兼容已出现的 Vercel 拼写错误变量，后续应统一修正为 `DATABASE_URL`。
 2. UI 表单链路回归：在公网环境中用真实表单提交跑脚本、新增视频、剪辑提交、审核、排期和发布。
 3. 服务端动作权限回归：继续验证管理员、编导、剪辑在表单 action 层的可操作边界。
 4. 文件上传验证：在 S3 兼容配置下验证头像和审核截图上传、预览、刷新可访问。
