@@ -56,6 +56,15 @@ body {
   overflow-y: auto;
 }
 
+.app-brand-title {
+  margin: 0 0 22px 4px;
+  color: #20242a;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
 .topbar {
   position: relative;
   z-index: 1;
@@ -86,19 +95,6 @@ textarea:focus-visible,
 select:focus-visible {
   outline: 3px solid color-mix(in srgb, var(--accent) 42%, #ffffff);
   outline-offset: 3px;
-}
-
-.brand-pill {
-  display: grid;
-  place-items: center;
-  width: 38px;
-  height: 38px;
-  margin-bottom: 6px;
-  border-radius: 15px;
-  color: #ffffff;
-  font-weight: 900;
-  background: linear-gradient(145deg, #f33a3c, #ff9868);
-  box-shadow: 0 14px 26px rgba(242, 65, 56, 0.24);
 }
 
 .nav-items {
@@ -2058,11 +2054,6 @@ select:focus-visible {
   box-shadow: none;
 }
 
-.app-shell:has(.director-workbench) .brand-pill {
-  background: linear-gradient(145deg, #b65f46, #d69b5c);
-  box-shadow: 0 14px 26px rgba(150, 84, 53, 0.14);
-}
-
 .app-shell:has(.director-workbench) .nav-item span {
   color: #b6654c;
 }
@@ -2672,11 +2663,6 @@ select:focus-visible {
   box-shadow: none;
 }
 
-.app-shell:has(.review-workspace) .brand-pill {
-  background: linear-gradient(145deg, #b65f46, #d69b5c);
-  box-shadow: 0 14px 26px rgba(150, 84, 53, 0.14);
-}
-
 .app-shell:has(.review-workspace) .nav-item span {
   color: #b6654c;
 }
@@ -3282,11 +3268,6 @@ a.review-signal-card:focus-visible {
   box-shadow: none;
 }
 
-.app-shell:has(.schedule-workspace) .brand-pill {
-  background: linear-gradient(145deg, #b65f46, #d69b5c);
-  box-shadow: 0 14px 26px rgba(150, 84, 53, 0.14);
-}
-
 .app-shell:has(.schedule-workspace) .nav-item span {
   color: #b6654c;
 }
@@ -3669,11 +3650,6 @@ a.schedule-signal-card:focus-visible {
   box-shadow: none;
 }
 
-.app-shell:has(.inventory-workspace) .brand-pill {
-  background: linear-gradient(145deg, #b65f46, #d69b5c);
-  box-shadow: 0 14px 26px rgba(150, 84, 53, 0.14);
-}
-
 .app-shell:has(.inventory-workspace) .nav-item span {
   color: #b6654c;
 }
@@ -3992,11 +3968,6 @@ a.schedule-signal-card:focus-visible {
     linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(248, 244, 238, 0.64)),
     #f7f4ef;
   box-shadow: none;
-}
-
-.app-shell:has(.people-workspace) .brand-pill {
-  background: linear-gradient(145deg, #b65f46, #d69b5c);
-  box-shadow: 0 14px 26px rgba(150, 84, 53, 0.14);
 }
 
 .app-shell:has(.people-workspace) .nav-item span {
@@ -4394,11 +4365,6 @@ a.schedule-signal-card:focus-visible {
   box-shadow: none;
 }
 
-.app-shell:has(.settings-workspace) .brand-pill {
-  background: linear-gradient(145deg, #b65f46, #d69b5c);
-  box-shadow: 0 14px 26px rgba(150, 84, 53, 0.14);
-}
-
 .app-shell:has(.settings-workspace) .nav-item span {
   color: #b6654c;
 }
@@ -4781,11 +4747,6 @@ a.schedule-signal-card:focus-visible {
     linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(248, 244, 238, 0.64)),
     #f7f4ef;
   box-shadow: none;
-}
-
-.app-shell:has(.script-library) .brand-pill {
-  background: linear-gradient(145deg, #b65f46, #d69b5c);
-  box-shadow: 0 14px 26px rgba(150, 84, 53, 0.14);
 }
 
 .app-shell:has(.script-library) .nav-item span {
@@ -5411,11 +5372,6 @@ a.schedule-signal-card:focus-visible {
     linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(248, 244, 238, 0.64)),
     #f7f4ef;
   box-shadow: none;
-}
-
-.app-shell:has(.video-workspace) .brand-pill {
-  background: linear-gradient(145deg, #9d6758, #d69b5c);
-  box-shadow: 0 14px 26px rgba(150, 84, 53, 0.14);
 }
 
 .app-shell:has(.video-workspace) .nav-item span {
@@ -7203,11 +7159,6 @@ a.video-signal-card[data-active="true"] {
   --theme-accent-shadow: color-mix(in srgb, var(--theme-accent) 18%, transparent);
 }
 
-.app-shell .brand-pill {
-  background: linear-gradient(145deg, var(--theme-accent), var(--theme-accent-2)) !important;
-  box-shadow: 0 14px 26px var(--theme-accent-shadow) !important;
-}
-
 .app-shell .nav-item span,
 .app-shell :is(
   .director-kicker,
@@ -7969,6 +7920,11 @@ a.video-signal-card[data-active="true"] {
     padding: 20px;
   }
 
+  .app-brand-title {
+    margin: 0 0 18px 2px;
+    font-size: 18px;
+  }
+
   .topbar,
   .page-toolbar,
   .settings-current {
@@ -8015,6 +7971,11 @@ a.video-signal-card[data-active="true"] {
 @media (max-height: 820px) and (min-width: 901px) {
   .content-pane {
     padding: 20px 30px 28px;
+  }
+
+  .app-brand-title {
+    margin-bottom: 18px;
+    font-size: 20px;
   }
 
   .topbar {

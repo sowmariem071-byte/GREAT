@@ -72,7 +72,6 @@ export async function AppShell({
       <div className="ambient ambient-three"></div>
       <main className="app-shell" data-theme={roleTheme[user.role]} style={themeVars(user)}>
         <aside className="side-nav" aria-label="主导航">
-          <div className="brand-pill">排</div>
           <nav className="nav-items">
             {visibleNav.map((item) => (
               <Link className={`nav-item ${active === item.key ? "active" : ""}`} href={item.href} key={item.key}>
@@ -88,6 +87,7 @@ export async function AppShell({
         </aside>
 
         <section className="content-pane">
+          <div className="app-brand-title">母婴事业部</div>
           <header className="topbar">
             <div>
               <p className="eyebrow">Content Calendar Studio</p>

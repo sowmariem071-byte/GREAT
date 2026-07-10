@@ -2055,3 +2055,23 @@
   - 建议新增/更新标准变量 `DATABASE_URL`，并移除或忽略拼写错误的 `DATAASE_URL`；如果继续使用 `DATAASE_URL`，也必须把其中密码更新为新密码。
 - 下一步：
   - Vercel Production 中更新正确的 Supabase Postgres/Pooler 连接串后，重新部署并再次验证 `gr / zzb888` 登录和核心页面链路。
+
+## 2026-07-10 11:38 - 登录后公共工作台品牌位置调整
+- 目标：根据截图反馈，删除左侧导航顶部“排”品牌方块，并在主内容左上角加入“母婴事业部”文字标识。
+- 变更：
+  - 从 `AppShell` 左侧窄导航中移除 `brand-pill`，登录后的所有业务页面不再显示顶部“排”方块。
+  - 在 `content-pane` 顶部新增 `app-brand-title`，统一展示“母婴事业部”。
+  - 新增桌面与移动端字标样式，保持简洁文字形态，不做成按钮或卡片。
+  - 清理各页面主题中已无用的 `.brand-pill` 样式覆盖。
+  - 同步更新需求主线和开发计划，明确公共工作台外壳的品牌展示规则。
+- 涉及文件：
+  - `src/components/AppShell.tsx`
+  - `src/app/app.css`
+  - `docs/REQUIREMENTS.md`
+  - `docs/PLAN.md`
+  - `docs/PROGRESS.md`
+- 验证：
+  - 已通过：`npm run typecheck`
+  - 已通过：`npm run lint`
+  - 已通过：`npm run build`
+  - 已通过：源码检查确认 `AppShell` 不再渲染 `brand-pill`，公共内容区新增 `app-brand-title`。
