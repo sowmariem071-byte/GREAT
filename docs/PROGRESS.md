@@ -2042,3 +2042,16 @@
 - 下一步：
   - 用户在 Vercel Production 环境变量中更新 `DATABASE_URL` 为正确连接串后，重新部署。
   - 重新验证 `gr / zzb888` 登录、`/dashboard`、`/scripts`、`/videos`、`/review`、`/schedule`、`/inventory`、`/people`、`/settings`。
+## 2026-07-10 11:22 - 重置后生产登录链路复测
+- 目标：用户反馈已重置后，继续验证 Vercel 公网登录、会话和核心页面链路。
+- 验证结果：
+  - Vercel Production 环境变量列表仍显示 `APP_URL`、`SESSION_SECRET`、`DATAASE_URL`，未看到标准 `DATABASE_URL`；当前代码已临时兼容 `DATAASE_URL`。
+  - 最新生产部署 `zhengzhengba-r8tq1su1m-zhengzhengba.vercel.app` 已 Ready。
+  - 公网 `https://zhengzhengba.vercel.app/login` 返回 200。
+  - 公网 `POST /api/auth/login` 仍返回 500。
+  - 最新 Vercel 运行日志仍显示 Prisma 数据库认证失败：`postgres` 用户密码无效。
+- 当前阻塞点：
+  - Supabase 数据库密码重置后，需要把 Vercel Production 环境变量里的数据库连接串同步更新为新密码。
+  - 建议新增/更新标准变量 `DATABASE_URL`，并移除或忽略拼写错误的 `DATAASE_URL`；如果继续使用 `DATAASE_URL`，也必须把其中密码更新为新密码。
+- 下一步：
+  - Vercel Production 中更新正确的 Supabase Postgres/Pooler 连接串后，重新部署并再次验证 `gr / zzb888` 登录和核心页面链路。
